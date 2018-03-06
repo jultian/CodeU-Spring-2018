@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>He She Wumbo</title>
+  <title>CodeU Chat App</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -53,7 +53,7 @@
 	  <h3>Meet the team!</h3>
 	  
 	  <ul>
-		<li><b>Kevin Workman</b></li>
+		<li><b>Kevin Wang</b></li>
 		<p>
 			Hey everyone! I'm Kevin, the project advisor for team Metapod(11). 
 			:D I've been working at Google for a little over three years now and

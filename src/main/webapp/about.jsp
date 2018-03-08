@@ -64,7 +64,7 @@
         This page should also be used to describe the features and improvements
         you've added.
       </p>
-	  <h3>Meet Team Metapod</h3>
+	  <h2>Meet Team Metapod</h2>
 	  
 	  <ul>
 		<li><b>Kevin Wang</b></li>

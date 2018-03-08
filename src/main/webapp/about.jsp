@@ -64,6 +64,48 @@
         This page should also be used to describe the features and improvements
         you've added.
       </p>
+	  <h3>Meet Team Metapod</h3>
+	  
+	  <ul>
+		<li><b>Kevin Wang</b></li>
+		<p>
+			Hey everyone! I'm Kevin, the project advisor for team Metapod(11). 
+			:D I've been working at Google for a little over three years now and
+			work on Google Flights frontend. 
+		</p>
+		<li><b>Julia Tiang</b></li>
+		<p>
+			Hey Guys!I'm a sophomore at UNC-Chapel Hill and I'm majoring in
+			Computer Science and pursuing the pre-medical track. I'm also super 
+			interested in game development (I've been playing Pokemon since I was
+			like 5, but now my DS is stowed away somewhere so I don't get too 
+			carried away with it). I also have a bit of experience with graphic
+			design, so I like playing around with typography, layouts, colors etc.
+		
+		</p>
+		<li><b>Eda Zhou</b></li>
+		<p>
+			I'm Eda and a sophomore at Worcester Polytechnic Institute (WPI for short).
+			I am studying computer science although I am not sure what specifically I enjoy
+			the most yet and want to pursue. 
+		</p>
+		<li><b>Philip Cori</b></li>
+		<p>
+			 I'm a sophomore at Santa Clara University studying Computer Science and
+			 Engineering. As of now, I'm probably most interested in Data Science
+			 and back-end web development, though I'm super open to learning basically
+			 anything computer science related! I'm really looking forward to working
+			 with you all!
+		</p>
+		<li><b>Maximillian George 'Oche'</b></li>
+		<p>
+			Hey Kevin, My first name is Maximillian but I go by Oche. I am a sophomore
+			at Washington and Jefferson and I'm majoring in computer and information
+			studies. I'm really interested in working on game programs maybe or something
+			to do with AI. I'm really not sure yet but I'm not really picky so I'm happy
+			to work on whatever.
+		</p>
+	  </ul>
     </div>
   </div>
 </body>

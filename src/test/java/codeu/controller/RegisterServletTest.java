@@ -48,25 +48,5 @@ public class RegisterServletTest {
         .setAttribute("error", "Please enter only letters, numbers, and spaces.");
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
-  
-  @Test
-  public void testDoPost_ExistingUser() throws IOException, ServletException {
-    Mockito.when(mockRequest.getParameter("username")).thenReturn("test username");
 
-    UserStore mockUserStore = Mockito.mock(UserStore.class);
-    Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(true);
-    registerServlet.setUserStore(mockUserStore);
-	
-	//HttpServletRequest request;
-    HttpSession mockSession = /*request.getSession();*/Mockito.mock(HttpSession.class);
-    Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
-
-    registerServlet.doPost(mockRequest, mockResponse);
-
-    Mockito.verify(mockUserStore, Mockito.never()).addUser(Mockito.any(User.class));
-
-    //httpSession.setAttribute("user", "test username");
-	Mockito.verify(mockSession).setAttribute("user", "test username");
-    Mockito.verify(mockResponse).sendRedirect("/conversations");
-  }
 }

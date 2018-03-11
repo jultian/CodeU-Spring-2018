@@ -61,7 +61,7 @@ public class RegisterServlet extends HttpServlet {
 		}
 		User user = new User(UUID.randomUUID(), username, password, Instant.now());
 		userStore.addUser(user);
-
+		request.getSession().setAttribute("user", username);
 		response.sendRedirect("/login");
  }
 }

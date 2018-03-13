@@ -28,6 +28,10 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import java.time.Instant;
+import java.util.UUID;
+
+
 public class LoginServletTest {
 
   private LoginServlet loginServlet;
@@ -53,44 +57,54 @@ public class LoginServletTest {
   }
 
   @Test
-  public void testDoPost_BadUsername() throws IOException, ServletException {
-    Mockito.when(mockRequest.getParameter("username")).thenReturn("bad !@#$% username");
+  public void testDoPost_NonExistingUser() throws IOException, ServletException{
+    Mockito.when(mockRequest.getParameter("username")).thenReturn("test username");
+    Mockito.when(mockRequest.getParameter("password")).thenReturn("test password");
 
-    loginServlet.doPost(mockRequest, mockResponse);
+    UserStore mockUserStore = Mockito.mock(UserStore.class);
+    Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(false);       //UserStore should return that the user is not registered
+    loginServlet.setUserStore(mockUserStore);
 
-    Mockito.verify(mockRequest)
-        .setAttribute("error", "Please enter only letters, numbers, and spaces.");
+    loginServlet.doPost(mockRequest,mockResponse);
+
+    Mockito.verify(mockRequest).setAttribute("error", "That username was not found.");    //check if the right error message is set
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
+
   }
 
   @Test
-  public void testDoPost_NewUser() throws IOException, ServletException {
+  public void testDoPost_InvalidPassword() throws IOException, ServletException{
     Mockito.when(mockRequest.getParameter("username")).thenReturn("test username");
+    Mockito.when(mockRequest.getParameter("password")).thenReturn("invalid password");
 
     UserStore mockUserStore = Mockito.mock(UserStore.class);
-    Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(false);
+    Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(true);       //UserStore should return that the user is registered
+
+    User mockUser = new User(UUID.randomUUID(),"test username","valid password",Instant.now());     //create a mock user that has a password ("valid password") NOT matching the password entered ("invalid password")
+    Mockito.when(mockUserStore.getUser("test username")).thenReturn(mockUser);                      //return this user when it's called
+
     loginServlet.setUserStore(mockUserStore);
 
-    HttpSession mockSession = Mockito.mock(HttpSession.class);
-    Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
+    loginServlet.doPost(mockRequest,mockResponse);
 
-    loginServlet.doPost(mockRequest, mockResponse);
+    Mockito.verify(mockRequest).setAttribute("error", "Invalid password.");      //check if the right error message is sent
+    Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
 
-    ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
-
-    Mockito.verify(mockUserStore).addUser(userArgumentCaptor.capture());
-    Assert.assertEquals(userArgumentCaptor.getValue().getName(), "test username");
-
-    Mockito.verify(mockSession).setAttribute("user", "test username");
-    Mockito.verify(mockResponse).sendRedirect("/conversations");
   }
 
   @Test
   public void testDoPost_ExistingUser() throws IOException, ServletException {
     Mockito.when(mockRequest.getParameter("username")).thenReturn("test username");
+    Mockito.when(mockRequest.getParameter("password")).thenReturn("test password");
 
     UserStore mockUserStore = Mockito.mock(UserStore.class);
-    Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(true);
+
+    Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(true);     //UserStore should return that the user is registered
+
+    User mockUser = new User(UUID.randomUUID(),"test username","test password",Instant.now());      //create mock user with password matching password entered
+
+    Mockito.when(mockUserStore.getUser("test username")).thenReturn(mockUser);
+
     loginServlet.setUserStore(mockUserStore);
 
     HttpSession mockSession = Mockito.mock(HttpSession.class);
@@ -98,9 +112,7 @@ public class LoginServletTest {
 
     loginServlet.doPost(mockRequest, mockResponse);
 
-    Mockito.verify(mockUserStore, Mockito.never()).addUser(Mockito.any(User.class));
-
-    Mockito.verify(mockSession).setAttribute("user", "test username");
+    Mockito.verify(mockSession).setAttribute("user", "test username");      //check if this user's session is successfully retrieved
     Mockito.verify(mockResponse).sendRedirect("/conversations");
   }
 }

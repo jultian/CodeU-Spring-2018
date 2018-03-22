@@ -1,3 +1,5 @@
+<%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.data.User" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +24,11 @@
      <a href="/register">Register</a>
    <% } %>
    <a href="/about.jsp">About</a>
+   <% if(request.getSession().getAttribute("user") != null){ %>
+		<% if(UserStore.getInstance().getUser(request.getSession().getAttribute("user")).isAdmin()){%>
+		  <a href="/testdata"> Test Data</a>
+		<% } %>
+	<% } %>
  </nav>
 
  <div id="container">

@@ -34,7 +34,7 @@
     <% } %>
     <a href="/about.jsp">About</a>
 	<% if(request.getSession().getAttribute("user") != null){ %>
-		<% if(UserStore.getInstance().getUser(request.getSession().getAttribute("user")).isAdmin()){%>
+		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata"> Test Data</a>
 		<% } %>
 	<% } %>

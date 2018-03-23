@@ -83,15 +83,6 @@ public class UserStore {
     }
     return null;
   }
-  public User getUser(Object username) {
-	 // same as the previous getUser() method but trying to see if it works with an object 
-	for( User user : users) {
-		if(user.getName().equals(username)) {
-			return user;
-		}
-	}
-	return null;
-  }
 
   /**
    * Access the User object with the given UUID.

@@ -29,7 +29,7 @@ public class MessageStore {
 
   /** Singleton instance of MessageStore. */
   private static MessageStore instance;
-
+  private int numMessages;
   /**
    * Returns the singleton instance of MessageStore that should be shared between all servlet
    * classes. Do not call this function from a test; use getTestInstance() instead.
@@ -37,6 +37,7 @@ public class MessageStore {
   public static MessageStore getInstance() {
     if (instance == null) {
       instance = new MessageStore(PersistentStorageAgent.getInstance());
+      instance.numMessages = 0;
     }
     return instance;
   }
@@ -75,6 +76,7 @@ public class MessageStore {
     try {
       messages.addAll(DefaultDataStore.getInstance().getAllMessages());
       loaded = true;
+      numMessages = messages.size();
     } catch (Exception e) {
       loaded = false;
       System.out.println("ERROR: Unable to establish initial store (messages).");
@@ -86,6 +88,7 @@ public class MessageStore {
   public void addMessage(Message message) {
     messages.add(message);
     persistentStorageAgent.writeThrough(message);
+    numMessages ++;
   }
 
   /** Access the current set of Messages within the given Conversation. */
@@ -105,5 +108,10 @@ public class MessageStore {
   /** Sets the List of Messages stored by this MessageStore. */
   public void setMessages(List<Message> messages) {
     this.messages = messages;
+    numMessages = messages.size();
+  }
+  
+  public int numMessages() {
+	  return numMessages;
   }
 }

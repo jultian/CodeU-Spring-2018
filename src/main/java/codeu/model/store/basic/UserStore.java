@@ -29,6 +29,7 @@ public class UserStore {
 
   /** Singleton instance of UserStore. */
   private static UserStore instance;
+  private int numUsers;
 
   /**
    * Returns the singleton instance of UserStore that should be shared between all servlet classes.
@@ -37,6 +38,7 @@ public class UserStore {
   public static UserStore getInstance() {
     if (instance == null) {
       instance = new UserStore(PersistentStorageAgent.getInstance());
+      instance.numUsers = 0;
     }
     return instance;
   }
@@ -61,7 +63,7 @@ public class UserStore {
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    users = new ArrayList<>();
+    users = new ArrayList<User>();
   }
 
   /** Load a set of randomly-generated Message objects. */
@@ -102,6 +104,7 @@ public class UserStore {
   public void addUser(User user) {
     users.add(user);
     persistentStorageAgent.writeThrough(user);
+    numUsers ++;
   }
 
   /** Return true if the given username is known to the application. */
@@ -120,5 +123,10 @@ public class UserStore {
    */
   public void setUsers(List<User> users) {
     this.users = users;
+    numUsers += users.size();
+  }
+  
+  public int numUsers() {
+	  return numUsers;
   }
 }

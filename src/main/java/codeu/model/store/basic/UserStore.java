@@ -75,7 +75,7 @@ public class UserStore {
    * @return null if username does not match any existing User.
    */
   public User getUser(String username) {
-    // This approach will be pretty slow if we have many users.
+    // This approach will be pretty slow if we have many users CONSIDER CHANGING TO HASHTABLE
     for (User user : users) {
       if (user.getName().equals(username)) {
         return user;

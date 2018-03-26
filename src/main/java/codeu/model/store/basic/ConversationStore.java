@@ -28,7 +28,6 @@ public class ConversationStore {
 
   /** Singleton instance of ConversationStore. */
   private static ConversationStore instance;
-  private int numConversations;
 
   /**
    * Returns the singleton instance of ConversationStore that should be shared between all servlet
@@ -37,7 +36,6 @@ public class ConversationStore {
   public static ConversationStore getInstance() {
     if (instance == null) {
       instance = new ConversationStore(PersistentStorageAgent.getInstance());
-      instance.numConversations = 0;
     }
     return instance;
   }
@@ -75,7 +73,6 @@ public class ConversationStore {
     boolean loaded = false;
     try {
       conversations.addAll(DefaultDataStore.getInstance().getAllConversations());
-      numConversations = conversations.size();
       loaded = true;
     } catch (Exception e) {
       loaded = false;
@@ -93,7 +90,6 @@ public class ConversationStore {
   public void addConversation(Conversation conversation) {
     conversations.add(conversation);
     persistentStorageAgent.writeThrough(conversation);
-    numConversations ++;
   }
 
   /** Check whether a Conversation title is already known to the application. */
@@ -120,10 +116,9 @@ public class ConversationStore {
   /** Sets the List of Conversations stored by this ConversationStore. */
   public void setConversations(List<Conversation> conversations) {
     this.conversations = conversations;
-    numConversations = conversations.size();
   }
   
   public int numConversations() {
-	  return numConversations;
+	  return conversations.size();
   }
 }

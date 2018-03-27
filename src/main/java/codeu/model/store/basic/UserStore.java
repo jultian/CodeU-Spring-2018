@@ -15,6 +15,10 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.User;
+import codeu.model.data.Message;
+import codeu.model.data.Conversation;
+import codeu.model.store.basic.MessageStore;
+import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
@@ -124,5 +128,27 @@ public class UserStore {
   
   public int numUsers() {
 	  return users.size();
+  }
+  
+  //return user with most messages
+  public User wordiestUser() {
+	  User wordiest = null;
+	  int mostWords = 0;
+	  int numMessages;
+	  for(User user : users) {
+		  numMessages = 0;
+		  for(Conversation convo : ConversationStore.getInstance().getAllConversations()) {
+			  for(Message msg : MessageStore.getInstance().getMessagesInConversation(convo.getId())) {
+				  if(msg.getAuthorId().equals(user.getId())) {
+					  numMessages++;
+				  }
+			  }
+		  }
+		  if(numMessages > mostWords) {
+			  wordiest = user;
+			  mostWords = numMessages;
+		  }
+	  }		  
+	  return wordiest;
   }
 }

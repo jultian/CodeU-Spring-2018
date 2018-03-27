@@ -61,6 +61,6 @@ public class User {
   
   /** Checks if the current user is an admin, currently just has our usernames hardcoded*/
   public boolean isAdmin(){
-	  return name.equals("yourboyoch") || name.equals("ezhou");
+	  return name.equals("yourboyoch") || name.equals("ezhou") || name.equals("philip");
   }
 }

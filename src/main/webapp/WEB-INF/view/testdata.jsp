@@ -56,6 +56,9 @@
     <p> Users: <%=UserStore.getInstance().numUsers() %> </p>
     <p> Conversations: <%=ConversationStore.getInstance().numConversations()%> </p>
     <p> Messages: <%=MessageStore.getInstance().numMessages() %> </p>
+    <%if (UserStore.getInstance().wordiestUser() != null){ %>
+    	<p> Wordiest user: <%=UserStore.getInstance().wordiestUser().getName() %></p>
+    <%} %>
     <hr>
     <p>This will load a number of users, conversations, and messages for testing
         purposes.</p>

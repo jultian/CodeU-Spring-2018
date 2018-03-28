@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.Scanner;
+import java.io.*;
 
 /**
  * This class makes it easy to add dummy data to your chat app instance. To use fake data, set
@@ -75,7 +77,65 @@ public class DefaultDataStore {
       addRandomMessages();
     }
   }
+  public void testData(){
+	/*Scanner takes in information from a given txt file. for now the txt file name is hardcoded
+	will eventually make it so that user can select which file they want*/	
+	Scanner scan = new Scanner("Practice.txt");
+	
+	//line refers to what part of the script the scanner is on i.e "Romeo: i love juliet....... /return symbol/"
+	String line = scan.nextLine();
+	
+	//num is helpful with making a conversation object at the beginning of the script using the first speakers name as the user
+	int num = 0;
+	
+	// empty conversation
+	Conversation conversation = null;
 
+	while(scan.hasNextLine()){
+		// gets name of speaker excluding colon
+		String userName = line.substring(0, line.indexOf(":")).trim();
+		
+		// creates user using the userName gotten
+		User user = new User(UUID.randomUUID(), userName, "password", Instant.now());
+		
+		//creates conversation object using the first user
+		if(user != null && num < 1){
+			String title = "Conversation Practice";
+			conversation = new Conversation(UUID.randomUUID(), user.getId(), title, Instant.now());
+			
+			// added to conversations list while writeThrough writes the conversation object to our data store service
+			PersistentStorageAgent.getInstance().writeThrough(conversation);
+			conversations.add(conversation);
+		}
+		
+		//checks to see if user is already in users list to avoid duplicate user objects if contains uses '==' it will work
+		// if contains uses '===' it will fail. Not sure which contains uses :)))
+		if(!users.contains(user)){
+			
+			//add user to users list while writeThrough writes the user object to our data store service
+			PersistentStorageAgent.getInstance().writeThrough(user);
+			users.add(user);
+		}
+		
+		// sets author to current user object
+		User author = user;
+		
+		// content contains everything from after the colon to the return key
+		String content = line.substring(line.indexOf(":")+1, line.length()).trim();
+		
+		// create new message
+		Message message =
+          new Message(UUID.randomUUID(), conversation.getId(), author.getId(), content, Instant.now());
+		
+		//add message to messages list while writeThrough writes the message object to our data store service		
+		PersistentStorageAgent.getInstance().writeThrough(message);
+		messages.add(message);
+
+		num++;
+	}
+	
+  }
+  
   public boolean isValid() {
     return true;
   }

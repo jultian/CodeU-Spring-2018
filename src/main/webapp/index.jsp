@@ -34,7 +34,7 @@
     <% } %>
     <a href="/about.jsp">About</a>
 	<% if(request.getSession().getAttribute("user") != null){ %>
-		<% if(UserStore.getInstance().getUser(request.getSession().getAttribute("user")).isAdmin()){%>
+		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata"> Test Data</a>
 		<% } %>
 	<% } %>
@@ -52,9 +52,7 @@
         <li>Go to the <a href="/conversations">conversations</a> page to
             create or join a conversation.</li>
         <li>View the <a href="/about.jsp">about</a> page to learn more about the
-            project.</li>
-        <li>You can <a href="/testdata">load test data</a> to fill the site with
-            example data.</li>
+		project.</li>
       </ul>
 	  
 	  <h3>Meet the team!</h3>

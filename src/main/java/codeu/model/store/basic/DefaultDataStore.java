@@ -77,64 +77,50 @@ public class DefaultDataStore {
       addRandomMessages();
     }
   }
+  
+  Map<String, User> userMap = new HashMap<>();
+  Map<String, Conversation> conversationMap = new HashMap<>();
+  Map<String, Message> messageMap = new HashMap<>();
+  
+  public User makeUser(String userName){ 
+	User user = new User(UUID.randomUUID(), userName, "password", Instant.now());
+	return user;
+  }
+  
   public void testData(){
-	/*Scanner takes in information from a given txt file. for now the txt file name is hardcoded
+	/*BufferReader takes in information from a given txt file. for now the txt file name is hardcoded
 	will eventually make it so that user can select which file they want*/	
-	Scanner scan = new Scanner("Practice.txt");
-	
-	//line refers to what part of the script the scanner is on i.e "Romeo: i love juliet....... /return symbol/"
-	String line = scan.nextLine();
-	
-	//num is helpful with making a conversation object at the beginning of the script using the first speakers name as the user
-	int num = 0;
-	
-	// empty conversation
+	BufferedReader br = new BufferedReader(new FileReader("Practice.txt"));
 	Conversation conversation = null;
-
-	while(scan.hasNextLine()){
-		// gets name of speaker excluding colon
+	
+	while(br.readLine() != null){
+		
+		//line refers to what part of the script the scanner is on i.e "Romeo: i love juliet....... /return symbol/"
+		String line = br.readLine();
 		String userName = line.substring(0, line.indexOf(":")).trim();
 		
-		// creates user using the userName gotten
-		User user = new User(UUID.randomUUID(), userName, "password", Instant.now());
+		//creates user if userName isn't mapped to any object within userMap
+		userMap.computeIfAbsent(userName, k -> makeUser(k));
 		
-		//creates conversation object using the first user
-		if(user != null && num < 1){
-			String title = "Conversation Practice";
-			conversation = new Conversation(UUID.randomUUID(), user.getId(), title, Instant.now());
-			
-			// added to conversations list while writeThrough writes the conversation object to our data store service
-			PersistentStorageAgent.getInstance().writeThrough(conversation);
-			conversations.add(conversation);
+		if(conversationMap.isEmpty() && userName != null){
+			String title = "Test Conversation";
+			User conversationCreator = userMap.get(userName);
+			conversation = new Conversation(UUID.randomUUID(), conversationCreator.getId(), title, Instant.now());
+			conversationMap.put(userName, conversation);
 		}
 		
-		//checks to see if user is already in users list to avoid duplicate user objects if contains uses '==' it will work
-		// if contains uses '===' it will fail. Not sure which contains uses :)))
-		if(!users.contains(user)){
-			
-			//add user to users list while writeThrough writes the user object to our data store service
-			PersistentStorageAgent.getInstance().writeThrough(user);
-			users.add(user);
-		}
-		if(user != null){
-			// sets author to current user object
-			User author = user;
-
-			// content contains everything from after the colon to the return key
+		if(userName != null){
+			User author = userMap.get(userName);
 			String content = line.substring(line.indexOf(":")+1).trim();
-
-			// create new message
 			Message message =
-		  new Message(UUID.randomUUID(), conversation.getId(), author.getId(), content, Instant.now());
-
-			//add message to messages list while writeThrough writes the message object to our data store service		
-			PersistentStorageAgent.getInstance().writeThrough(message);
-			messages.add(message);
+			  new Message(UUID.randomUUID(), conversation.getId(), author.getId(), content, Instant.now());
+			messageMap.put(message);
 		}
-
-		num++;
 	}
-	
+	// performs the write through function for each Map value V  
+	userMap.forEach((k, v) -> PersistentStorageAgent.getInstance().writeThrough(v));
+	conversationMap.forEach((k, v) -> PersistentStorageAgent.getInstance().writeThrough(v));
+	messageMap.forEach((k, v) -> PersistentStorageAgent.getInstance().writeThrough(v));
   }
   
   public boolean isValid() {

@@ -61,7 +61,7 @@ public class UserStore {
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    users = new ArrayList<>();
+    users = new ArrayList<User>();
   }
 
   /** Load a set of randomly-generated Message objects. */
@@ -120,5 +120,9 @@ public class UserStore {
    */
   public void setUsers(List<User> users) {
     this.users = users;
+  }
+  
+  public int numUsers() {
+	  return users.size();
   }
 }

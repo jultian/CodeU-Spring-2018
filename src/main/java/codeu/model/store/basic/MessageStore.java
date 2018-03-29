@@ -29,7 +29,7 @@ public class MessageStore {
 
   /** Singleton instance of MessageStore. */
   private static MessageStore instance;
-
+  
   /**
    * Returns the singleton instance of MessageStore that should be shared between all servlet
    * classes. Do not call this function from a test; use getTestInstance() instead.
@@ -37,6 +37,7 @@ public class MessageStore {
   public static MessageStore getInstance() {
     if (instance == null) {
       instance = new MessageStore(PersistentStorageAgent.getInstance());
+      
     }
     return instance;
   }
@@ -105,5 +106,9 @@ public class MessageStore {
   /** Sets the List of Messages stored by this MessageStore. */
   public void setMessages(List<Message> messages) {
     this.messages = messages;
+  }
+  
+  public int numMessages() {
+	  return messages.size();
   }
 }

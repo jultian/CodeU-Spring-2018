@@ -121,7 +121,7 @@ public class DefaultDataStore {
 			User author = user;
 
 			// content contains everything from after the colon to the return key
-			String content = line.substring(line.indexOf(":")+1, line.length()).trim();
+			String content = line.substring(line.indexOf(":")+1).trim();
 
 			// create new message
 			Message message =

@@ -100,7 +100,7 @@ public class DefaultDataStore {
 		String userName = line.substring(0, line.indexOf(":")).trim();
 		
 		//creates user if userName isn't mapped to any object within userMap
-		userMap.computeIfAbsent(userName, k -> makeUser(k));
+		userMap.computeIfAbsent(userName, this::makeUser);
 		
 		if(conversationMap.isEmpty() && userName != null){
 			String title = "Test Conversation";
@@ -114,7 +114,7 @@ public class DefaultDataStore {
 			String content = line.substring(line.indexOf(":")+1).trim();
 			Message message =
 			  new Message(UUID.randomUUID(), conversation.getId(), author.getId(), content, Instant.now());
-			messageMap.put(message);
+			messageMap.put(userName, message);
 		}
 	}
 	// performs the write through function for each Map value V  

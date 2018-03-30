@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.Scanner;
+import java.io.*;
 
 /**
  * This class makes it easy to add dummy data to your chat app instance. To use fake data, set
@@ -75,7 +77,52 @@ public class DefaultDataStore {
       addRandomMessages();
     }
   }
-
+  
+  Map<String, User> userMap = new HashMap<>();
+  Map<String, Conversation> conversationMap = new HashMap<>();
+  Map<String, Message> messageMap = new HashMap<>();
+  
+  public User makeUser(String userName){ 
+	User user = new User(UUID.randomUUID(), userName, "password", Instant.now());
+	return user;
+  }
+  
+  public void testData(){
+	/*BufferReader takes in information from a given txt file. for now the txt file name is hardcoded
+	will eventually make it so that user can select which file they want*/	
+	BufferedReader br = new BufferedReader(new FileReader("Practice.txt"));
+	Conversation conversation = null;
+	
+	while(br.readLine() != null){
+		
+		//line refers to what part of the script the scanner is on i.e "Romeo: i love juliet....... /return symbol/"
+		String line = br.readLine();
+		String userName = line.substring(0, line.indexOf(":")).trim();
+		
+		//creates user if userName isn't mapped to any object within userMap
+		userMap.computeIfAbsent(userName, this::makeUser);
+		
+		if(conversationMap.isEmpty() && userName != null){
+			String title = "Test Conversation";
+			User conversationCreator = userMap.get(userName);
+			conversation = new Conversation(UUID.randomUUID(), conversationCreator.getId(), title, Instant.now());
+			conversationMap.put(userName, conversation);
+		}
+		
+		if(userName != null){
+			User author = userMap.get(userName);
+			String content = line.substring(line.indexOf(":")+1).trim();
+			Message message =
+			  new Message(UUID.randomUUID(), conversation.getId(), author.getId(), content, Instant.now());
+			messageMap.put(userName, message);
+		}
+	}
+	// performs the write through function for each Map value V  
+	userMap.forEach((k, v) -> PersistentStorageAgent.getInstance().writeThrough(v));
+	conversationMap.forEach((k, v) -> PersistentStorageAgent.getInstance().writeThrough(v));
+	messageMap.forEach((k, v) -> PersistentStorageAgent.getInstance().writeThrough(v));
+  }
+  
   public boolean isValid() {
     return true;
   }

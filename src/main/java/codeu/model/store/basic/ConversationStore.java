@@ -16,8 +16,10 @@ package codeu.model.store.basic;
 
 import codeu.model.data.Conversation;
 import codeu.model.store.persistence.PersistentStorageAgent;
+import codeu.model.store.basic.MessageStore;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -121,4 +123,10 @@ public class ConversationStore {
   public int numConversations() {
 	  return conversations.size();
   }
+  
+  public int avgMessagesPerConvo() {
+	  return MessageStore.getInstance().numMessages()/numConversations();
+  }
+  
+  
 }

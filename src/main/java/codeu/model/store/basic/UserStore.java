@@ -23,6 +23,8 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.time.Instant;
+
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -150,5 +152,18 @@ public class UserStore {
 		  }
 	  }		  
 	  return wordiest;
+  }
+  
+  public User newestUser() {
+	  if(users.size() == 0) return null;
+	  Instant latestCreation = users.get(0).getCreationTime();
+	  User newestUser = users.get(0);
+	  for(User user : users) {
+		  if(user.getCreationTime().compareTo(latestCreation) > 0) {
+			  latestCreation = user.getCreationTime();
+			  newestUser = user;
+		  }
+	  }
+	  return newestUser;
   }
 }

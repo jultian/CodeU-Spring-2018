@@ -112,9 +112,14 @@ public class ConversationStore {
 		}
 		return null;
 	}
+  
+  /** Sets the List of Conversations stored by this ConversationStore. */
+  public void setConversations(List<Conversation> conversations) {
+    this.conversations = conversations;
+  }
+  
+  public int numConversations() {
+	  return conversations.size();
+  }
 
-	/** Sets the List of Conversations stored by this ConversationStore. */
-	public void setConversations(List<Conversation> conversations) {
-		this.conversations = conversations;
-	}
 }

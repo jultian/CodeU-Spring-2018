@@ -58,31 +58,31 @@ public class UserStore {
 	/** The in-memory list of Users. */
 	private List<User> users;
 
-	/** This class is a singleton, so its constructor is private. Call getInstance() instead. */
-	private UserStore(PersistentStorageAgent persistentStorageAgent) {
-		this.persistentStorageAgent = persistentStorageAgent;
-		users = new ArrayList<>();
-	}
+  /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
+  private UserStore(PersistentStorageAgent persistentStorageAgent) {
+    this.persistentStorageAgent = persistentStorageAgent;
+    users = new ArrayList<User>();
+  }
 
 	/** Load a set of randomly-generated Message objects. */
 	public void loadTestData() {
 		users.addAll(DefaultDataStore.getInstance().getAllUsers());
 	}
-
-	/**
-	 * Access the User object with the given name.
-	 *
-	 * @return null if username does not match any existing User.
-	 */
-	public User getUser(String username) {
-		// This approach will be pretty slow if we have many users.
-		for (User user : users) {
-			if (user.getName().equals(username)) {
-				return user;
-			}
-		}
-		return null;
-	}
+  
+  /**
+   * Access the User object with the given name.
+   *
+   * @return null if username does not match any existing User.
+   */
+  public User getUser(String username) {
+    // This approach will be pretty slow if we have many users CONSIDER CHANGING TO HASHTABLE
+    for (User user : users) {
+      if (user.getName().equals(username)) {
+        return user;
+      }
+    }
+    return null;
+  }
 
 	/**
 	 * Access the User object with the given UUID.
@@ -113,12 +113,15 @@ public class UserStore {
 		}
 		return false;
 	}
-
-	/**
-	 * Sets the List of Users stored by this UserStore. This should only be called once, when the data
-	 * is loaded from Datastore.
-	 */
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
+  /**
+   * Sets the List of Users stored by this UserStore. This should only be called once, when the data
+   * is loaded from Datastore.
+   */
+  public void setUsers(List<User> users) {
+    this.users = users;
+  }
+  
+  public int numUsers() {
+	  return users.size();
+  }
 }

@@ -13,6 +13,15 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+
+
+<%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.data.User" %>
+<%@ page import="codeu.model.store.basic.ConversationStore" %>
+<%@ page import="codeu.model.store.basic.MessageStore" %>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,10 +40,23 @@
       <a href="/register">Register</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <% if(request.getSession().getAttribute("user") != null){ %>
+    
+		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+		  <a href="/testdata"> Test Data</a>
+		<% } %>
+		
+	<% } %>
+	
   </nav>
 
   <div id="container">
-    <h1>Load Test Data</h1>
+    <h1>Administration</h1>
+    <hr>
+    <p> Users: <%=UserStore.getInstance().numUsers() %> </p>
+    <p> Conversations: <%=ConversationStore.getInstance().numConversations()%> </p>
+    <p> Messages: <%=MessageStore.getInstance().numMessages() %> </p>
+    <hr>
     <p>This will load a number of users, conversations, and messages for testing
         purposes.</p>
     <form action="/testdata" method="POST">

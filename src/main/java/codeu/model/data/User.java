@@ -16,6 +16,10 @@ package codeu.model.data;
 
 import java.time.Instant;
 import java.util.UUID;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.ZoneId;
+
 
 /** Class representing a registered user. */
 public class User {
@@ -62,5 +66,10 @@ public class User {
   /** Checks if the current user is an admin, currently just has our usernames hardcoded*/
   public boolean isAdmin(){
 	  return name.equals("yourboyoch") || name.equals("ezhou") || name.equals("philip");
+  }
+  
+  public String getReadableCreationTime() {
+	  DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault());
+	  return formatter.format(getCreationTime());
   }
 }

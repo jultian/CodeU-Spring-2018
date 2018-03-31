@@ -124,7 +124,9 @@ public class ConversationStore {
 	  return conversations.size();
   }
   
+  //returns average number of messages per conversation
   public int avgMessagesPerConvo() {
+	  if(numConversations() == 0) return 0;
 	  return MessageStore.getInstance().numMessages()/numConversations();
   }
   

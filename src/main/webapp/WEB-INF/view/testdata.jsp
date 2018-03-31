@@ -56,11 +56,16 @@
     <p> Users: <%=UserStore.getInstance().numUsers() %> </p>
     <p> Conversations: <%=ConversationStore.getInstance().numConversations()%> </p>
     <p> Messages: <%=MessageStore.getInstance().numMessages() %> </p>
-    <%if (UserStore.getInstance().wordiestUser() != null){ %>
-    	<p> Wordiest user: <%=UserStore.getInstance().wordiestUser().getName() %></p>
-    <%} %>
-    <p> Newest User: <%=UserStore.getInstance().newestUser().getName() %> created at <%=UserStore.getInstance().newestUser().getReadableCreationTime() %></p>
     <p> Average number of messages per conversation: <%=ConversationStore.getInstance().avgMessagesPerConvo() %></p>
+    <%if (UserStore.getInstance().newestUser() != null) { %>
+    	<p> Newest User: <%=UserStore.getInstance().newestUser().getName() %>, created at <%=UserStore.getInstance().newestUser().getReadableCreationTime() %></p>
+    <% } %>
+    <%if(UserStore.getInstance().mostActiveUser() != null) { %>
+    	<p> Most active user: <%=UserStore.getInstance().mostActiveUser().getName() %></p>
+    <% } %>
+    <%if (UserStore.getInstance().wordiestUser() != null) { %>
+    	<p> Wordiest user: <%=UserStore.getInstance().wordiestUser().getName() %></p>
+    <% } %>
     <hr>
     <p>This will load a number of users, conversations, and messages for testing
         purposes.</p>

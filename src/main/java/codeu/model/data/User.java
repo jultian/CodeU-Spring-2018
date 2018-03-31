@@ -68,6 +68,7 @@ public class User {
 	  return name.equals("yourboyoch") || name.equals("ezhou") || name.equals("philip");
   }
   
+  //returns a readable string representing User's registration time
   public String getReadableCreationTime() {
 	  DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault());
 	  return formatter.format(getCreationTime());

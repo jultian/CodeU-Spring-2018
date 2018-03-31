@@ -24,6 +24,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * This class makes it easy to add dummy data to your chat app instance. To use fake data, set
  * USE_DEFAULT_DATA to true, then adjust the COUNT variables to generate the corresponding amount of
@@ -32,156 +34,154 @@ import java.util.UUID;
  */
 public class DefaultDataStore {
 
-  /** Set this to true to use generated default data. */
-  private boolean USE_DEFAULT_DATA = true;
+	/** Set this to true to use generated default data. */
+	private boolean USE_DEFAULT_DATA = true;
 
-  /**
-   * Default user count. Only used if USE_DEFAULT_DATA is true. Make sure this is <= the number of
-   * names in the getRandomUsernames() function.
-   */
-  private int DEFAULT_USER_COUNT = 20;
+	/**
+	 * Default user count. Only used if USE_DEFAULT_DATA is true. Make sure this is <= the number of
+	 * names in the getRandomUsernames() function.
+	 */
+	private int DEFAULT_USER_COUNT = 20;
 
-  /**
-   * Default conversation count. Only used if USE_DEFAULT_DATA is true. Each conversation is
-   * assigned a random user as its author.
-   */
-  private int DEFAULT_CONVERSATION_COUNT = 10;
+	/**
+	 * Default conversation count. Only used if USE_DEFAULT_DATA is true. Each conversation is
+	 * assigned a random user as its author.
+	 */
+	private int DEFAULT_CONVERSATION_COUNT = 10;
 
-  /**
-   * Default message count. Only used if USE_DEFAULT_DATA is true. Each message is assigned a random
-   * author and conversation.
-   */
-  private int DEFAULT_MESSAGE_COUNT = 100;
+	/**
+	 * Default message count. Only used if USE_DEFAULT_DATA is true. Each message is assigned a random
+	 * author and conversation.
+	 */
+	private int DEFAULT_MESSAGE_COUNT = 100;
 
-  private static DefaultDataStore instance = new DefaultDataStore();
+	private static DefaultDataStore instance = new DefaultDataStore();
 
-  public static DefaultDataStore getInstance() {
-    return instance;
-  }
+	public static DefaultDataStore getInstance() {
+		return instance;
+	}
 
-  private List<User> users;
-  private List<Conversation> conversations;
-  private List<Message> messages;
+	private List<User> users;
+	private List<Conversation> conversations;
+	private List<Message> messages;
 
-  /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
-  private DefaultDataStore() {
-    users = new ArrayList<>();
-    conversations = new ArrayList<>();
-    messages = new ArrayList<>();
+	/** This class is a singleton, so its constructor is private. Call getInstance() instead. */
+	private DefaultDataStore() {
+		users = new ArrayList<>();
+		conversations = new ArrayList<>();
+		messages = new ArrayList<>();
 
-    if (USE_DEFAULT_DATA) {
-      addRandomUsers();
-      addRandomConversations();
-      addRandomMessages();
-    }
-  }
+		if (USE_DEFAULT_DATA) {
+			addRandomUsers();
+			addRandomConversations();
+			addRandomMessages();
+		}
+	}
 
-  public boolean isValid() {
-    return true;
-  }
+	public boolean isValid() {
+		return true;
+	}
 
-  public List<User> getAllUsers() {
-    return users;
-  }
+	public List<User> getAllUsers() {
+		return users;
+	}
 
-  public List<Conversation> getAllConversations() {
-    return conversations;
-  }
+	public List<Conversation> getAllConversations() {
+		return conversations;
+	}
 
-  public List<Message> getAllMessages() {
-    return messages;
-  }
+	public List<Message> getAllMessages() {
+		return messages;
+	}
 
-  private void addRandomUsers() {
+	private void addRandomUsers() {
 
-    List<String> randomUsernames = getRandomUsernames();
-    Collections.shuffle(randomUsernames);
+		List<String> randomUsernames = getRandomUsernames();
+		Collections.shuffle(randomUsernames);
 
-    for (int i = 0; i < DEFAULT_USER_COUNT; i++) {
-      User user = new User(UUID.randomUUID(), randomUsernames.get(i), "password", Instant.now());
-      // for testing so password is hard-coded
-      PersistentStorageAgent.getInstance().writeThrough(user);
-      users.add(user);
-    }
-  }
+		for (int i = 0; i < DEFAULT_USER_COUNT; i++) {
+			User user = new User(UUID.randomUUID(), randomUsernames.get(i), BCrypt.hashpw("password", BCrypt.gensalt()), Instant.now());
+			// for testing so password is hard-coded
+			PersistentStorageAgent.getInstance().writeThrough(user);
+			users.add(user);
+		}
+	}
 
-  private void addRandomConversations() {
-    for (int i = 1; i <= DEFAULT_CONVERSATION_COUNT; i++) {
-      User user = getRandomElement(users);
-      String title = "Conversation_" + i;
-      Conversation conversation =
-          new Conversation(UUID.randomUUID(), user.getId(), title, Instant.now());
-      PersistentStorageAgent.getInstance().writeThrough(conversation);
-      conversations.add(conversation);
-    }
-  }
+	private void addRandomConversations() {
+		for (int i = 1; i <= DEFAULT_CONVERSATION_COUNT; i++) {
+			User user = getRandomElement(users);
+			String title = "Conversation_" + i;
+			Conversation conversation = new Conversation(UUID.randomUUID(), user.getId(), title, Instant.now());
+			PersistentStorageAgent.getInstance().writeThrough(conversation);
+			conversations.add(conversation);
+		}
+	}
 
-  private void addRandomMessages() {
-    for (int i = 0; i < DEFAULT_MESSAGE_COUNT; i++) {
-      Conversation conversation = getRandomElement(conversations);
-      User author = getRandomElement(users);
-      String content = getRandomMessageContent();
+	private void addRandomMessages() {
+		for (int i = 0; i < DEFAULT_MESSAGE_COUNT; i++) {
+			Conversation conversation = getRandomElement(conversations);
+			User author = getRandomElement(users);
+			String content = getRandomMessageContent();
 
-      Message message =
-          new Message(
-              UUID.randomUUID(), conversation.getId(), author.getId(), content, Instant.now());
-      PersistentStorageAgent.getInstance().writeThrough(message);
-      messages.add(message);
-    }
-  }
+			Message message = new Message(UUID.randomUUID(), conversation.getId(), author.getId(), content, Instant.now());
 
-  private <E> E getRandomElement(List<E> list) {
-    return list.get((int) (Math.random() * list.size()));
-  }
+			PersistentStorageAgent.getInstance().writeThrough(message);
+			messages.add(message);
+		}
+	}
 
-  private List<String> getRandomUsernames() {
-    List<String> randomUsernames = new ArrayList<>();
-    randomUsernames.add("Grace");
-    randomUsernames.add("Ada");
-    randomUsernames.add("Stanley");
-    randomUsernames.add("Howard");
-    randomUsernames.add("Frances");
-    randomUsernames.add("John");
-    randomUsernames.add("Henrietta");
-    randomUsernames.add("Gertrude");
-    randomUsernames.add("Charles");
-    randomUsernames.add("Jean");
-    randomUsernames.add("Kathleen");
-    randomUsernames.add("Marlyn");
-    randomUsernames.add("Ruth");
-    randomUsernames.add("Irma");
-    randomUsernames.add("Evelyn");
-    randomUsernames.add("Margaret");
-    randomUsernames.add("Ida");
-    randomUsernames.add("Mary");
-    randomUsernames.add("Dana");
-    randomUsernames.add("Tim");
-    randomUsernames.add("Corrado");
-    randomUsernames.add("George");
-    randomUsernames.add("Kathleen");
-    randomUsernames.add("Fred");
-    randomUsernames.add("Nikolay");
-    randomUsernames.add("Vannevar");
-    randomUsernames.add("David");
-    randomUsernames.add("Vint");
-    randomUsernames.add("Mary");
-    randomUsernames.add("Karen");
-    return randomUsernames;
-  }
+	private <E> E getRandomElement(List<E> list) {
+		return list.get((int) (Math.random() * list.size()));
+	}
 
-  private String getRandomMessageContent() {
-    String loremIpsum =
-        "dolorem ipsum, quia dolor sit amet consectetur adipiscing velit, "
-            + "sed quia non numquam do eius modi tempora incididunt, ut labore et dolore magnam "
-            + "aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam "
-            + "corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum "
-            + "iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, "
-            + "qui dolorem eum fugiat, quo voluptas nulla pariatur";
+	private List<String> getRandomUsernames() {
+		List<String> randomUsernames = new ArrayList<>();
+		randomUsernames.add("Grace");
+		randomUsernames.add("Ada");
+		randomUsernames.add("Stanley");
+		randomUsernames.add("Howard");
+		randomUsernames.add("Frances");
+		randomUsernames.add("John");
+		randomUsernames.add("Henrietta");
+		randomUsernames.add("Gertrude");
+		randomUsernames.add("Charles");
+		randomUsernames.add("Jean");
+		randomUsernames.add("Kathleen");
+		randomUsernames.add("Marlyn");
+		randomUsernames.add("Ruth");
+		randomUsernames.add("Irma");
+		randomUsernames.add("Evelyn");
+		randomUsernames.add("Margaret");
+		randomUsernames.add("Ida");
+		randomUsernames.add("Mary");
+		randomUsernames.add("Dana");
+		randomUsernames.add("Tim");
+		randomUsernames.add("Corrado");
+		randomUsernames.add("George");
+		randomUsernames.add("Kathleen");
+		randomUsernames.add("Fred");
+		randomUsernames.add("Nikolay");
+		randomUsernames.add("Vannevar");
+		randomUsernames.add("David");
+		randomUsernames.add("Vint");
+		randomUsernames.add("Mary");
+		randomUsernames.add("Karen");
+		return randomUsernames;
+	}
 
-    int startIndex = (int) (Math.random() * (loremIpsum.length() - 100));
-    int endIndex = (int) (startIndex + 10 + Math.random() * 90);
-    String messageContent = loremIpsum.substring(startIndex, endIndex).trim();
+	private String getRandomMessageContent() {
+		String loremIpsum =
+				"dolorem ipsum, quia dolor sit amet consectetur adipiscing velit, "
+						+ "sed quia non numquam do eius modi tempora incididunt, ut labore et dolore magnam "
+						+ "aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam "
+						+ "corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum "
+						+ "iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, "
+						+ "qui dolorem eum fugiat, quo voluptas nulla pariatur";
 
-    return messageContent;
-  }
+		int startIndex = (int) (Math.random() * (loremIpsum.length() - 100));
+		int endIndex = (int) (startIndex + 10 + Math.random() * 90);
+		String messageContent = loremIpsum.substring(startIndex, endIndex).trim();
+
+		return messageContent;
+	}
 }

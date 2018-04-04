@@ -19,6 +19,8 @@ import java.util.UUID;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /** Class representing a registered user. */
@@ -28,7 +30,10 @@ public class User {
   private final String name;
   private final String hashedPassword;
   private final Instant creation;
+  private static final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault());
+  private List<Message> messagesSent;
 
+  
   /**
    * Constructs a new User.
    *
@@ -42,6 +47,7 @@ public class User {
     this.name = name;
     this.hashedPassword = password;
     this.creation = creation;
+    messagesSent = new ArrayList<>();
   }
 
   /** Returns the ID of this User. */
@@ -71,7 +77,20 @@ public class User {
   
   //returns a readable string representing User's registration time
   public String getReadableCreationTime() {
-	  DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault());
 	  return formatter.format(getCreationTime());
   }
+  
+  public int numMessagesSent() {
+	  return messagesSent.size();
+  }
+  
+  public void addMessage(Message message) {
+	  messagesSent.add(message);
+  }
+  
+  public List<Message> getMessagesSent() {
+	  return messagesSent;
+  }
+  
+  
 }

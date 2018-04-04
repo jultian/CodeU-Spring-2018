@@ -36,6 +36,7 @@ public class UserStore {
 
 	/** Singleton instance of UserStore. */
 	private static UserStore instance;
+	private User wordiestUser;
 
 	/**
 	 * Returns the singleton instance of UserStore that should be shared between all servlet classes.
@@ -69,6 +70,7 @@ public class UserStore {
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
     users = new ArrayList<User>();
+    
   }
 
 	/** Load a set of randomly-generated Message objects. */
@@ -132,26 +134,13 @@ public class UserStore {
 	  return users.size();
   }
   
-  //return user with most messages
+  //return user with most messages 
   public User wordiestUser() {
-	  User wordiest = null;		//will return a null User if no existing Users, Conversations, or Messages
-	  int mostMessages = 0;		//keeps track of most messages sent by a single User
-	  int numMessages;			//temp var for every user
-	  for(User user : users) {
-		  numMessages = 0;
-		  for(Conversation convo : ConversationStore.getInstance().getAllConversations()) {
-			  for(Message msg : MessageStore.getInstance().getMessagesInConversation(convo.getId())) {
-				  if(msg.getAuthorId().equals(user.getId())) {
-					  numMessages++;		//increment if a message is found that belongs to the user being visited in loop
-				  }
-			  }
-		  }
-		  if(numMessages > mostMessages) {		//check and update vars if this user has most messages so far
-			  wordiest = user;
-			  mostMessages = numMessages;
-		  }
-	  }		  
-	  return wordiest;
+	  return wordiestUser;
+  }
+  
+  public void setWordiestUser(User input) {
+	  wordiestUser = input;
   }
   
   //returns User most recently registered
@@ -169,30 +158,24 @@ public class UserStore {
   }
   
   //returns User with most messages sent in the last 24 hours
-  //similar implementation to wordiestUser
-  public User mostActiveUser() {
+ public User mostActiveUser() {
 	  User mostActive = null;
 	  Instant now = Instant.now();		//create Instant representing current time
-	  int numMessages;					
+	  int numRecentMessages;					
 	  int mostRecentMessages = 0;		
 	  long hourDiff;
 	  for(User user : users) {
-		  numMessages = 0;
-		  for(Conversation convo : ConversationStore.getInstance().getAllConversations()) {
-			  for(Message msg : MessageStore.getInstance().getMessagesInConversation(convo.getId())) {
-				  if(msg.getAuthorId().equals(user.getId())) {
-					  hourDiff = ChronoUnit.HOURS.between(msg.getCreationTime(),now);		//get number of hours ago the message was sent
-					  if(hourDiff < 24)			//if message was sent in last 24 hours, increment
-						  numMessages++;
-				  }
-			  }
+		  numRecentMessages = 0;
+		  for(Message message : user.getMessagesSent()) {
+			  hourDiff = ChronoUnit.HOURS.between(message.getCreationTime(),now);		//get number of hours ago the message was sent
+			  if(hourDiff < 24)			//if message was sent in last 24 hours, increment
+				  numRecentMessages++;
 		  }
-		  if(numMessages > mostRecentMessages) {			//check for new most active user
+		  if(numRecentMessages > mostRecentMessages) {			//check for new most active user
 			  mostActive = user;
-			  mostRecentMessages = numMessages;
+			  mostRecentMessages = numRecentMessages;
 		  }
 	  }
 	  return mostActive;
-	  
   }
 }

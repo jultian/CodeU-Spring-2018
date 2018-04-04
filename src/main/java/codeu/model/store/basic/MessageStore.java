@@ -15,6 +15,7 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.Message;
+import codeu.model.data.User;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,14 @@ public class MessageStore {
   public void addMessage(Message message) {
     messages.add(message);
     persistentStorageAgent.writeThrough(message);
+    User user = UserStore.getInstance().getUser(message.getAuthorId());
+    if(user != null) {			//done so tests in MessageStoreTest succeed (tests don't associate messages with Users... maybe change in future)
+	    user.addMessage(message);
+	    if(UserStore.getInstance().wordiestUser() == null)
+	    	UserStore.getInstance().setWordiestUser(user);
+	    else if(user.numMessagesSent() > UserStore.getInstance().wordiestUser().numMessagesSent())
+	    	UserStore.getInstance().setWordiestUser(user);
+    }
   }
 
   /** Access the current set of Messages within the given Conversation. */
@@ -105,7 +114,10 @@ public class MessageStore {
 
   /** Sets the List of Messages stored by this MessageStore. */
   public void setMessages(List<Message> messages) {
-    this.messages = messages;
+	this.messages.clear();
+	for(Message message : messages) {
+		addMessage(message);
+	}
   }
   
   public int numMessages() {

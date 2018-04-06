@@ -74,7 +74,7 @@ public class TestDataServletTest {
 
     testDataServlet.doPost(mockRequest, mockResponse);
 
-    Mockito.verify(mockUserStore).loadTestData();
+    Mockito.verify(mockUserStore).loadTestData("Practice.txt");
     Mockito.verify(mockConversationStore).loadTestData();
     Mockito.verify(mockMessageStore).loadTestData();
     Mockito.verify(mockResponse).sendRedirect("/");
@@ -87,7 +87,7 @@ public class TestDataServletTest {
 
     testDataServlet.doPost(mockRequest, mockResponse);
 
-    Mockito.verify(mockUserStore, Mockito.never()).loadTestData();
+    Mockito.verify(mockUserStore, Mockito.never()).loadTestData("Practice.txt");
     Mockito.verify(mockConversationStore, Mockito.never()).loadTestData();
     Mockito.verify(mockMessageStore, Mockito.never()).loadTestData();
     Mockito.verify(mockResponse).sendRedirect("/");

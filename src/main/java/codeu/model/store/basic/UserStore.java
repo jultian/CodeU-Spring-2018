@@ -65,8 +65,9 @@ public class UserStore {
   }
 
   /** Load a set of randomly-generated Message objects. */
-  public void loadTestData() {
-    users.addAll(DefaultDataStore.getInstance().getAllUsers());
+  //specify what file it is
+  public void loadTestData(String fileName) {
+    users.addAll(DefaultDataStore.getInstance().getAllUsers(fileName));
   }
 
   /**

@@ -23,6 +23,7 @@ public class User {
   private final String name;
   private final String password;
   private final Instant creation;
+  private final boolean isAdmin;
 
   /**
    * Constructs a new User.
@@ -37,6 +38,7 @@ public class User {
     this.name = name;
     this.password = password;
     this.creation = creation;
+	this.isAdmin = false;
   }
 
   /** Returns the ID of this User. */

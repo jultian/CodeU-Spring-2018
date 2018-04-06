@@ -19,7 +19,7 @@ import java.util.UUID;
 
 /** Class representing a registered user. */
 public class User {
-  
+
   private final UUID id;
   private final String name;
   private final String hashedPassword;
@@ -36,7 +36,7 @@ public class User {
   public User(UUID id, String name, String password, Instant creation) {
     this.id = id;
     this.name = name;
-    this.password = password;
+    this.hashedPassword = password;
     this.creation = creation;
   }
 
@@ -52,14 +52,14 @@ public class User {
 
   /** Returns the password of this User. */
   public String getPassword() {
-    return password;
+    return hashedPassword;
   }
-  
+
   /** Returns the creation time of this User. */
   public Instant getCreationTime() {
     return creation;
   }
-  
+
   /** Checks if the current user is an admin, currently just has our usernames hardcoded*/
   public boolean isAdmin(){
 	  return name.equals("yourboyoch") || name.equals("ezhou");

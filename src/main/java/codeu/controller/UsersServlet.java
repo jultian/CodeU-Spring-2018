@@ -33,26 +33,8 @@ public class UsersServlet extends HttpServlet {
   @Override
   public void init() throws ServletException {
     super.init();
-    //setConversationStore(ConversationStore.getInstance());
-    //setMessageStore(MessageStore.getInstance());
     setUserStore(UserStore.getInstance());
   }
-
-  /**
-   * Sets the ConversationStore used by this servlet. This function provides a common setup method
-   * for use by the test framework or the servlet's init() function.
-   */
-  /*void setConversationStore(ConversationStore conversationStore) {
-    this.conversationStore = conversationStore;
-  } */
-
-  /**
-   * Sets the MessageStore used by this servlet. This function provides a common setup method for
-   * use by the test framework or the servlet's init() function.
-   */
-  /*void setMessageStore(MessageStore messageStore) {
-    this.messageStore = messageStore;
-  } */
 
   /**
    * Sets the UserStore used by this servlet. This function provides a common setup method for use
@@ -74,12 +56,10 @@ public class UsersServlet extends HttpServlet {
     String userName = requestUrl.substring("/users/".length());
 
 	// if the user is viewing their own profile page
-    if (userName == (String) request.getSession().getAttribute("user")) { 
-      System.out.println("" + userName + " has editing permissions!");
+    if (userName.equals((String) request.getSession().getAttribute("user"))) { 
+      System.out.println(userName + " has editing permissions!");
     }
 
-    //request.setAttribute("conversation", conversation);
-    //request.setAttribute("messages", messages);
     request.getRequestDispatcher("/WEB-INF/view/users.jsp").forward(request, response);
   }
 
@@ -94,44 +74,7 @@ public class UsersServlet extends HttpServlet {
       throws IOException, ServletException {
 
     String username = (String) request.getSession().getAttribute("user");
-    /*if (username == null) {
-      // user is not logged in, don't let them add a message
-      response.sendRedirect("/login");
-      return;
-    }
-
-    User user = userStore.getUser(username);
-    if (user == null) {
-      // user was not found, don't let them add a message
-      response.sendRedirect("/login");
-      return;
-    }
-
-    String requestUrl = request.getRequestURI();
-    String conversationTitle = requestUrl.substring("/chat/".length());
-
-    Conversation conversation = conversationStore.getConversationWithTitle(conversationTitle);
-    if (conversation == null) {
-      // couldn't find conversation, redirect to conversation list
-      response.sendRedirect("/conversations");
-      return;
-    }
-
-    String messageContent = request.getParameter("message");
-
-    // this removes any HTML from the message content
-    String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
-
-    Message message =
-        new Message(
-            UUID.randomUUID(),
-            conversation.getId(),
-            user.getId(),
-            cleanedMessageContent,
-            Instant.now());
-
-    messageStore.addMessage(message);*/
-
+   
     // redirect to a GET request
     response.sendRedirect("/users/" + username);
   }

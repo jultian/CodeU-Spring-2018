@@ -36,7 +36,7 @@ public class UserStore {
 
 	/** Singleton instance of UserStore. */
 	private static UserStore instance;
-	private User wordiestUser;
+	//private User wordiestUser;
 
 	/**
 	 * Returns the singleton instance of UserStore that should be shared between all servlet classes.
@@ -134,13 +134,34 @@ public class UserStore {
 	  return users.size();
   }
   
-  //return user with most messages 
-  public User wordiestUser() {
-	  return wordiestUser;
+  //loads the messageSent field of all Users
+  public void loadMessagesSent() {
+	  int count = 0;
+	  for(User user : users) {
+		  for(Conversation conversation : ConversationStore.getInstance().getAllConversations()) {
+			  for(Message message : MessageStore.getInstance().getMessagesInConversation(conversation.getId())) {
+				  if(message.getAuthorId().equals(user.getId())) {
+					  user.addMessage(message);
+					  count++;
+				  }
+			  }
+		  }
+	  }
+	  System.out.println("*******loadMessagesSent() run. Count: " + count + " ...messages size: " + MessageStore.getInstance().numMessages());
   }
   
-  public void setWordiestUser(User input) {
-	  wordiestUser = input;
+  //return user with most messages 
+  public User wordiestUser() {
+	  User wordiest = null;
+	  int numMessages;
+	  int mostMessages = 0;
+	  for(User user : users) {
+		  if(user.numMessagesSent() > mostMessages) {
+			  wordiest = user;
+			  mostMessages = user.numMessagesSent();
+		  }
+	  }
+	  return wordiest;
   }
   
   //returns User most recently registered
@@ -165,17 +186,20 @@ public class UserStore {
 	  int mostRecentMessages = 0;		
 	  long hourDiff;
 	  for(User user : users) {
-		  numRecentMessages = 0;
-		  for(Message message : user.getMessagesSent()) {
-			  hourDiff = ChronoUnit.HOURS.between(message.getCreationTime(),now);		//get number of hours ago the message was sent
-			  if(hourDiff < 24)			//if message was sent in last 24 hours, increment
-				  numRecentMessages++;
-		  }
-		  if(numRecentMessages > mostRecentMessages) {			//check for new most active user
-			  mostActive = user;
-			  mostRecentMessages = numRecentMessages;
+		  if(user.getMessagesSent() != null) {
+			  numRecentMessages = 0;
+			  for(Message message : user.getMessagesSent()) {
+				  hourDiff = ChronoUnit.HOURS.between(message.getCreationTime(),now);		//get number of hours ago the message was sent
+				  if(hourDiff < 24)			//if message was sent in last 24 hours, increment
+					  numRecentMessages++;
+			  }
+			  if(numRecentMessages > mostRecentMessages) {			//check for new most active user
+				  mostActive = user;
+				  mostRecentMessages = numRecentMessages;
+			  }
 		  }
 	  }
 	  return mostActive;
   }
+ 
 }

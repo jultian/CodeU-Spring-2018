@@ -127,8 +127,22 @@ public class DefaultDataStore {
 
 			PersistentStorageAgent.getInstance().writeThrough(message);
 			messages.add(message);
+			author.addMessage(message);
 		}
+		//writeThroughUsers();
 	}
+	
+	//rehydration method that's called once all Messages have been generated. Hydrates every User's messagesSent field, then writes through User to PersistantDataStore
+	//not currently used due to issue with message Ids.
+//	private void writeThroughUsers() {
+//		for(User user : users) {	
+//			for(Message message : messages) {
+//				if(message.getAuthorId().equals(user.getId()))
+//					user.addMessage(message);
+//			}
+//			PersistentStorageAgent.getInstance().writeThrough(user);
+//		}
+//	}
 
 	private <E> E getRandomElement(List<E> list) {
 		return list.get((int) (Math.random() * list.size()));
@@ -184,4 +198,5 @@ public class DefaultDataStore {
 
 		return messageContent;
 	}
+	
 }

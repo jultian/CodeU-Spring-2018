@@ -89,12 +89,8 @@ public class MessageStore {
     messages.add(message);
     persistentStorageAgent.writeThrough(message);
     User user = UserStore.getInstance().getUser(message.getAuthorId());
-    if(user != null) {			//done so tests in MessageStoreTest succeed (tests don't associate messages with Users... maybe change in future)
-	    user.addMessage(message);
-	    if(UserStore.getInstance().wordiestUser() == null)
-	    	UserStore.getInstance().setWordiestUser(user);
-	    else if(user.numMessagesSent() > UserStore.getInstance().wordiestUser().numMessagesSent())
-	    	UserStore.getInstance().setWordiestUser(user);
+    if(user != null) {			//do this check so test passes (change MessageStoreTest later)
+    	user.addMessage(message);
     }
   }
 
@@ -114,13 +110,18 @@ public class MessageStore {
 
   /** Sets the List of Messages stored by this MessageStore. */
   public void setMessages(List<Message> messages) {
-	this.messages.clear();
-	for(Message message : messages) {
-		addMessage(message);
-	}
+	this.messages = messages;
   }
   
   public int numMessages() {
 	  return messages.size();
+  }
+  
+  public Message getMessage(UUID id) {
+	  for(Message message : messages) {
+		  if(message.getId().equals(id))
+			  return message;
+	  }
+	  return null;
   }
 }

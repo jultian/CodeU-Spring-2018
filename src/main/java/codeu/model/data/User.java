@@ -21,6 +21,10 @@ import java.time.format.FormatStyle;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import codeu.model.store.basic.MessageStore;
+import codeu.model.store.basic.ConversationStore;
+import codeu.model.store.basic.UserStore;
+
 
 
 /** Class representing a registered user. */
@@ -47,7 +51,7 @@ public class User {
     this.name = name;
     this.hashedPassword = password;
     this.creation = creation;
-    messagesSent = new ArrayList<>();
+    messagesSent = new ArrayList<Message>();
   }
 
   /** Returns the ID of this User. */
@@ -81,6 +85,7 @@ public class User {
   }
   
   public int numMessagesSent() {
+	  if(messagesSent == null) return 0;
 	  return messagesSent.size();
   }
   
@@ -91,6 +96,26 @@ public class User {
   public List<Message> getMessagesSent() {
 	  return messagesSent;
   }
+  
+  //used for storing messagesSent in persistant data store. Not used for now because of issue with message Ids changing when loaded.
+//  public String getMessagesSentAsString() {
+//	  String out = "";
+//	  for(Message message : messagesSent) {
+//		  out += (message.getId().toString() + ",");
+//	  }
+//	  return out;
+//  }
+//  
+//  public void setMessagesSent(String messageIds) {
+//	  if(messageIds == null) return;
+//	  String[] uuidStrings = messageIds.split(",");
+//	  for(String id : uuidStrings) {
+//		  if(!id.equals("")) {
+//			  System.out.println(id);
+//			  addMessage(MessageStore.getInstance().getMessage(UUID.fromString(id)));
+//		  }
+//	  }
+//  }
   
   
 }

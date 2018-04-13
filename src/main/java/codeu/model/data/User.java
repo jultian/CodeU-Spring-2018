@@ -51,7 +51,7 @@ public class User {
     this.name = name;
     this.hashedPassword = hashedPassword;
     this.creation = creation;
-    messagesSent = new ArrayList<Message>();
+    messagesSent = new ArrayList<>();
   }
 
   /** Returns the ID of this User. */

@@ -15,10 +15,17 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.User;
+import codeu.model.data.Message;
+import codeu.model.data.Conversation;
+import codeu.model.store.basic.MessageStore;
+import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -29,6 +36,7 @@ public class UserStore {
 
 	/** Singleton instance of UserStore. */
 	private static UserStore instance;
+	//private User wordiestUser;
 
 	/**
 	 * Returns the singleton instance of UserStore that should be shared between all servlet classes.
@@ -62,6 +70,7 @@ public class UserStore {
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
     users = new ArrayList<User>();
+    
   }
 
 	/** Load a set of randomly-generated Message objects. */
@@ -124,4 +133,73 @@ public class UserStore {
   public int numUsers() {
 	  return users.size();
   }
+  
+  //loads the messageSent field of all Users
+  public void loadMessagesSent() {
+	  int count = 0;
+	  for(User user : users) {
+		  for(Conversation conversation : ConversationStore.getInstance().getAllConversations()) {
+			  for(Message message : MessageStore.getInstance().getMessagesInConversation(conversation.getId())) {
+				  if(message.getAuthorId().equals(user.getId())) {
+					  user.addMessage(message);
+					  count++;
+				  }
+			  }
+		  }
+	  }
+	  System.out.println("*******loadMessagesSent() run. Count: " + count + " ...messages size: " + MessageStore.getInstance().numMessages());
+  }
+  
+  //return user with most messages 
+  public User wordiestUser() {
+	  User wordiest = null;
+	  int numMessages;
+	  int mostMessages = 0;
+	  for(User user : users) {
+		  if(user.numMessagesSent() > mostMessages) {
+			  wordiest = user;
+			  mostMessages = user.numMessagesSent();
+		  }
+	  }
+	  return wordiest;
+  }
+  
+  //returns User most recently registered
+  public User newestUser() {
+	  if(users.size() == 0) return null;
+	  Instant latestCreation = users.get(0).getCreationTime();		//begin with first user in list as newest user
+	  User newestUser = users.get(0);
+	  for(User user : users) {
+		  if(user.getCreationTime().compareTo(latestCreation) > 0) {		//check and update vars if newer user is found by comparing creationTimes
+			  latestCreation = user.getCreationTime();
+			  newestUser = user;
+		  }
+	  }
+	  return newestUser;
+  }
+  
+  //returns User with most messages sent in the last 24 hours
+ public User mostActiveUser() {
+	  User mostActive = null;
+	  Instant now = Instant.now();		//create Instant representing current time
+	  int numRecentMessages;					
+	  int mostRecentMessages = 0;		
+	  long hourDiff;
+	  for(User user : users) {
+		  if(user.getMessagesSent() != null) {
+			  numRecentMessages = 0;
+			  for(Message message : user.getMessagesSent()) {
+				  hourDiff = ChronoUnit.HOURS.between(message.getCreationTime(),now);		//get number of hours ago the message was sent
+				  if(hourDiff < 24)			//if message was sent in last 24 hours, increment
+					  numRecentMessages++;
+			  }
+			  if(numRecentMessages > mostRecentMessages) {			//check for new most active user
+				  mostActive = user;
+				  mostRecentMessages = numRecentMessages;
+			  }
+		  }
+	  }
+	  return mostActive;
+  }
+ 
 }

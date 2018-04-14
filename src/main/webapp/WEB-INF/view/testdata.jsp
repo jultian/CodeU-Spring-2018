@@ -13,6 +13,24 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
+<%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.data.User" %>
+<%@ page import="codeu.model.store.basic.ConversationStore" %>
+<%@ page import="codeu.model.store.basic.MessageStore" %>
+<<<<<<< HEAD
+<%@ page import="java.util.List" %>
+<%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.data.User" %>
+=======
+
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,15 +49,36 @@
       <a href="/register">Register</a>
     <% } %>
     <a href="/about.jsp">About</a>
-	<% if(request.getSession().getAttribute("user") != null){ %>
+    <% if(request.getSession().getAttribute("user") != null){ %>
+    
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata"> Test Data</a>
 		<% } %>
+		
 	<% } %>
+	
   </nav>
 
   <div id="container">
-    <h1>Load Test Data</h1>
+    <h1>Administration</h1>
+    <hr>
+    <p> Users: <%=UserStore.getInstance().numUsers() %> </p>
+    <p> Conversations: <%=ConversationStore.getInstance().numConversations()%> </p>
+    <p> Messages: <%=MessageStore.getInstance().numMessages() %> </p>
+<<<<<<< HEAD
+=======
+    <p> Average number of messages per conversation: <%=ConversationStore.getInstance().avgMessagesPerConvo() %></p>
+    <%if (UserStore.getInstance().newestUser() != null) { %>
+    	<p> Newest User: <%=UserStore.getInstance().newestUser().getName() %>, created at <%=UserStore.getInstance().newestUser().getReadableCreationTime() %></p>
+    <% } %>
+    <%if(UserStore.getInstance().mostActiveUser() != null) { %>
+    	<p> Most active user: <%=UserStore.getInstance().mostActiveUser().getName() %></p>
+    <% } %>
+    <%if (UserStore.getInstance().wordiestUser() != null) { %>
+    	<p> Wordiest user: <%=UserStore.getInstance().wordiestUser().getName() %></p>
+    <% } %>
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
+    <hr>
     <p>This will load a number of users, conversations, and messages for testing
         purposes.</p>
     <form action="/testdata" method="POST">

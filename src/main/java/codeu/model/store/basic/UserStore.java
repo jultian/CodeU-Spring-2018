@@ -37,6 +37,10 @@ public class UserStore {
 	/** Singleton instance of UserStore. */
 	private static UserStore instance;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	//private User wordiestUser;
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 =======
 	//private User wordiestUser;
 >>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
@@ -74,6 +78,7 @@ public class UserStore {
     this.persistentStorageAgent = persistentStorageAgent;
     users = new ArrayList<User>();
 <<<<<<< HEAD
+<<<<<<< HEAD
   }
 
 	/** Load a set of randomly-generated Message objects. */
@@ -83,12 +88,17 @@ public class UserStore {
 			System.out.println(user.getName());
 		}
 =======
+=======
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
     
   }
 
 	/** Load a set of randomly-generated Message objects. */
 	public void loadTestData() {
 		users.addAll(DefaultDataStore.getInstance().getAllUsers());
+<<<<<<< HEAD
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
+=======
 >>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 	}
   
@@ -148,7 +158,10 @@ public class UserStore {
 	  return users.size();
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
   
   //loads the messageSent field of all Users
   public void loadMessagesSent() {
@@ -218,5 +231,8 @@ public class UserStore {
 	  return mostActive;
   }
  
+<<<<<<< HEAD
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
+=======
 >>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 }

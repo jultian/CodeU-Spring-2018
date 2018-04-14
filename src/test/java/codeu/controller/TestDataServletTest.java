@@ -75,7 +75,11 @@ public class TestDataServletTest {
 		testDataServlet.doPost(mockRequest, mockResponse);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Mockito.verify(mockUserStore).loadTestData("Practice.txt");
+=======
+		Mockito.verify(mockUserStore).loadTestData();
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 =======
 		Mockito.verify(mockUserStore).loadTestData();
 >>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
@@ -92,7 +96,11 @@ public class TestDataServletTest {
 		testDataServlet.doPost(mockRequest, mockResponse);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Mockito.verify(mockUserStore, Mockito.never()).loadTestData("Practice.txt");
+=======
+		Mockito.verify(mockUserStore, Mockito.never()).loadTestData();
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 =======
 		Mockito.verify(mockUserStore, Mockito.never()).loadTestData();
 >>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a

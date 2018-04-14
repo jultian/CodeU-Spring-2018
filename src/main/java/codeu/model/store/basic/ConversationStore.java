@@ -31,6 +31,9 @@ public class ConversationStore {
 	/** Singleton instance of ConversationStore. */
 	private static ConversationStore instance;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 
 	/**
 	 * Returns the singleton instance of ConversationStore that should be shared between all servlet
@@ -75,8 +78,12 @@ public class ConversationStore {
 	public boolean loadTestData() {
 		boolean loaded = false;
 		try {
+<<<<<<< HEAD
 			//only one conversation object
 			conversations.add(DefaultDataStore.getInstance().getConversation());
+=======
+			conversations.addAll(DefaultDataStore.getInstance().getAllConversations());
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 			loaded = true;
 		} catch (Exception e) {
 			loaded = false;
@@ -96,6 +103,7 @@ public class ConversationStore {
 		persistentStorageAgent.writeThrough(conversation);
 	}
 
+<<<<<<< HEAD
 =======
 
 	/**
@@ -173,6 +181,19 @@ public class ConversationStore {
 		return false;
 	}
 
+=======
+	/** Check whether a Conversation title is already known to the application. */
+	public boolean isTitleTaken(String title) {
+		// This approach will be pretty slow if we have many Conversations.
+		for (Conversation conversation : conversations) {
+			if (conversation.getTitle().equals(title)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 	/** Find and return the Conversation with the given title. */
 	public Conversation getConversationWithTitle(String title) {
 		for (Conversation conversation : conversations) {
@@ -182,6 +203,7 @@ public class ConversationStore {
 		}
 		return null;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/** Find and return the Conversation with the given id. */
 	public Conversation getConversationWithId(String id) {
@@ -194,6 +216,8 @@ public class ConversationStore {
 	}
 =======
 >>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
+=======
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
   
   /** Sets the List of Conversations stored by this ConversationStore. */
   public void setConversations(List<Conversation> conversations) {
@@ -204,8 +228,11 @@ public class ConversationStore {
 	  return conversations.size();
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
   
   //returns average number of messages per conversation
   public int avgMessagesPerConvo() {
@@ -213,5 +240,8 @@ public class ConversationStore {
 	  return MessageStore.getInstance().numMessages()/numConversations();
   }
   
+<<<<<<< HEAD
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
+=======
 >>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 }

@@ -26,8 +26,11 @@ import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.UserStore;
 
 
+<<<<<<< HEAD
 
 /** Don't forget to make isAdmin A private static final*/
+=======
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 
 /** Class representing a registered user. */
 public class User {
@@ -84,6 +87,7 @@ public class User {
   //returns a readable string representing User's registration time
   public String getReadableCreationTime() {
 	  return formatter.format(getCreationTime());
+<<<<<<< HEAD
   }
   
   public int numMessagesSent() {
@@ -95,6 +99,19 @@ public class User {
 	  messagesSent.add(message);
   }
   
+=======
+  }
+  
+  public int numMessagesSent() {
+	  if(messagesSent == null) return 0;
+	  return messagesSent.size();
+  }
+  
+  public void addMessage(Message message) {
+	  messagesSent.add(message);
+  }
+  
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
   public List<Message> getMessagesSent() {
 	  return messagesSent;
   }

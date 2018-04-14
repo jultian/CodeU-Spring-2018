@@ -89,8 +89,12 @@ public class TestDataServlet extends HttpServlet {
 
 		if (confirmButton != null) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			//hard coded file name for now 
 			userStore.loadTestData("Practice.txt");
+=======
+			userStore.loadTestData();
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 =======
 			userStore.loadTestData();
 >>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a

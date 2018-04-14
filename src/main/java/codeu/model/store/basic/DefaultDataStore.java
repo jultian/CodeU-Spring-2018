@@ -32,6 +32,8 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * This class makes it easy to add dummy data to your chat app instance. To use fake data, set
  * USE_DEFAULT_DATA to true, then adjust the COUNT variables to generate the corresponding amount of
@@ -40,6 +42,7 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class DefaultDataStore {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   private static DefaultDataStore instance = new DefaultDataStore();
 
@@ -235,6 +238,8 @@ public class DefaultDataStore {
   */
 }
 =======
+=======
+>>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 	/** Set this to true to use generated default data. */
 	private boolean USE_DEFAULT_DATA = true;
 

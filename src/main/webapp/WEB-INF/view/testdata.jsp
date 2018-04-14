@@ -14,29 +14,13 @@
   limitations under the License.
 --%>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
-=======
-
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.data.User" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
-<<<<<<< HEAD
-<<<<<<< HEAD
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.User" %>
-=======
-
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
-=======
-
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 
 
 <!DOCTYPE html>
@@ -73,11 +57,6 @@
     <p> Users: <%=UserStore.getInstance().numUsers() %> </p>
     <p> Conversations: <%=ConversationStore.getInstance().numConversations()%> </p>
     <p> Messages: <%=MessageStore.getInstance().numMessages() %> </p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
     <p> Average number of messages per conversation: <%=ConversationStore.getInstance().avgMessagesPerConvo() %></p>
     <%if (UserStore.getInstance().newestUser() != null) { %>
     	<p> Newest User: <%=UserStore.getInstance().newestUser().getName() %>, created at <%=UserStore.getInstance().newestUser().getReadableCreationTime() %></p>
@@ -88,10 +67,6 @@
     <%if (UserStore.getInstance().wordiestUser() != null) { %>
     	<p> Wordiest user: <%=UserStore.getInstance().wordiestUser().getName() %></p>
     <% } %>
-<<<<<<< HEAD
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
-=======
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
     <hr>
     <p>This will load a number of users, conversations, and messages for testing
         purposes.</p>

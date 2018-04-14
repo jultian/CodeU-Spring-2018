@@ -30,10 +30,6 @@ public class ConversationStore {
 
 	/** Singleton instance of ConversationStore. */
 	private static ConversationStore instance;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 
 	/**
 	 * Returns the singleton instance of ConversationStore that should be shared between all servlet
@@ -78,12 +74,8 @@ public class ConversationStore {
 	public boolean loadTestData() {
 		boolean loaded = false;
 		try {
-<<<<<<< HEAD
 			//only one conversation object
 			conversations.add(DefaultDataStore.getInstance().getConversation());
-=======
-			conversations.addAll(DefaultDataStore.getInstance().getAllConversations());
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 			loaded = true;
 		} catch (Exception e) {
 			loaded = false;
@@ -103,73 +95,6 @@ public class ConversationStore {
 		persistentStorageAgent.writeThrough(conversation);
 	}
 
-<<<<<<< HEAD
-=======
-
-	/**
-	 * Returns the singleton instance of ConversationStore that should be shared between all servlet
-	 * classes. Do not call this function from a test; use getTestInstance() instead.
-	 */
-	public static ConversationStore getInstance() {
-		if (instance == null) {
-			instance = new ConversationStore(PersistentStorageAgent.getInstance());
-		}
-		return instance;
-	}
-
-	/**
-	 * Instance getter function used for testing. Supply a mock for PersistentStorageAgent.
-	 *
-	 * @param persistentStorageAgent a mock used for testing
-	 */
-	public static ConversationStore getTestInstance(PersistentStorageAgent persistentStorageAgent) {
-		return new ConversationStore(persistentStorageAgent);
-	}
-
-	/**
-	 * The PersistentStorageAgent responsible for loading Conversations from and saving Conversations
-	 * to Datastore.
-	 */
-	private PersistentStorageAgent persistentStorageAgent;
-
-	/** The in-memory list of Conversations. */
-	private List<Conversation> conversations;
-
-	/** This class is a singleton, so its constructor is private. Call getInstance() instead. */
-	private ConversationStore(PersistentStorageAgent persistentStorageAgent) {
-		this.persistentStorageAgent = persistentStorageAgent;
-		conversations = new ArrayList<>();
-	}
-
-	/**
-	 * Load a set of randomly-generated Conversation objects.
-	 *
-	 * @return false if a error occurs.
-	 */
-	public boolean loadTestData() {
-		boolean loaded = false;
-		try {
-			conversations.addAll(DefaultDataStore.getInstance().getAllConversations());
-			loaded = true;
-		} catch (Exception e) {
-			loaded = false;
-			System.err.println("ERROR: Unable to establish initial store (conversations).");
-		}
-		return loaded;
-	}
-
-	/** Access the current set of conversations known to the application. */
-	public List<Conversation> getAllConversations() {
-		return conversations;
-	}
-
-	/** Add a new conversation to the current set of conversations known to the application. */
-	public void addConversation(Conversation conversation) {
-		conversations.add(conversation);
-		persistentStorageAgent.writeThrough(conversation);
-	}
-
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 	/** Check whether a Conversation title is already known to the application. */
 	public boolean isTitleTaken(String title) {
 		// This approach will be pretty slow if we have many Conversations.
@@ -181,19 +106,6 @@ public class ConversationStore {
 		return false;
 	}
 
-=======
-	/** Check whether a Conversation title is already known to the application. */
-	public boolean isTitleTaken(String title) {
-		// This approach will be pretty slow if we have many Conversations.
-		for (Conversation conversation : conversations) {
-			if (conversation.getTitle().equals(title)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 	/** Find and return the Conversation with the given title. */
 	public Conversation getConversationWithTitle(String title) {
 		for (Conversation conversation : conversations) {
@@ -203,8 +115,7 @@ public class ConversationStore {
 		}
 		return null;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
+	
 	/** Find and return the Conversation with the given id. */
 	public Conversation getConversationWithId(String id) {
 		for (Conversation conversation : conversations) {
@@ -214,10 +125,6 @@ public class ConversationStore {
 		}
 		return null;
 	}
-=======
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
-=======
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
   
   /** Sets the List of Conversations stored by this ConversationStore. */
   public void setConversations(List<Conversation> conversations) {
@@ -227,21 +134,10 @@ public class ConversationStore {
   public int numConversations() {
 	  return conversations.size();
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-=======
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
   
   //returns average number of messages per conversation
   public int avgMessagesPerConvo() {
 	  if(numConversations() == 0) return 0;
 	  return MessageStore.getInstance().numMessages()/numConversations();
   }
-  
-<<<<<<< HEAD
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
-=======
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 }

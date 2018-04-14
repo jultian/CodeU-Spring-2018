@@ -85,22 +85,10 @@ public class ChatServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String requestUrl = request.getRequestURI();
-<<<<<<< HEAD
-<<<<<<< HEAD
 		String conversationIdString = requestUrl.substring("/chat/".length());
 
 		Conversation conversation = conversationStore.getConversationWithId(conversationIdString);
 		String conversationTitle = conversation.getTitle();
-=======
-		String conversationTitle = requestUrl.substring("/chat/".length());
-
-		Conversation conversation = conversationStore.getConversationWithTitle(conversationTitle);
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
-=======
-		String conversationTitle = requestUrl.substring("/chat/".length());
-
-		Conversation conversation = conversationStore.getConversationWithTitle(conversationTitle);
->>>>>>> 6902d983dc4929d77d2b0f10e67ec3ce1a2cd04a
 		if (conversation == null) {
 			// couldn't find conversation, redirect to conversation list
 			System.out.println("Conversation was null: " + conversationTitle);

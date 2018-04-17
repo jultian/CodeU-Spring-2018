@@ -70,7 +70,7 @@ public class DefaultDataStore {
     */
 	
   public User makeUser(String userName){ 
-	User user = new User(UUID.randomUUID(), userName, "password", Instant.now());
+	User user = new User(UUID.randomUUID(), userName, BCrypt.hashpw("password", BCrypt.gensalt()), Instant.now());
 	return user;
   }
   

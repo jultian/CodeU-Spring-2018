@@ -82,9 +82,10 @@ public class DefaultDataStore {
 	//clear maps so already used data isn't recounted
 	userMap.clear();
 	messageMap.clear();
+	conversation =  null;
 	
 	String line;
-	int numConversations = 0;
+	
 	
 	try{
 		while((line = br.readLine()) != null){
@@ -93,7 +94,7 @@ public class DefaultDataStore {
 			userMap.computeIfAbsent(userName, this::makeUser);
 			
 			//only make new conversation if there is none
-			if(numConversations < 1 && userName != null){
+			if(conversation == null && userName != null){
 				String title = fileName+" Test Conversation";
 				User conversationCreator = userMap.get(userName);
 				conversation = new Conversation(UUID.randomUUID(), conversationCreator.getId(), title, Instant.now());

@@ -28,6 +28,7 @@
     <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
       <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+      <a href="/users/<%=request.getSession().getAttribute("user")%>">Profile</a>
     <% } else{ %>
       <a href="/login">Login</a>
       <a href="/register">Register</a>
@@ -83,10 +84,10 @@
 		</p>
 		<li><b>Julia Tiang</b></li>
 		<p>
-			Hey Guys!I'm a sophomore at UNC-Chapel Hill and I'm majoring in
+			Hey Guys! I'm a sophomore at UNC-Chapel Hill and I'm majoring in
 			Computer Science and pursuing the pre-medical track. I'm also super 
 			interested in game development (I've been playing Pokemon since I was
-			like 5, but now my DS is stowed away somewhere so I don't get too 
+			5, but now my DS is stowed away somewhere so I don't get too 
 			carried away with it). I also have a bit of experience with graphic
 			design, so I like playing around with typography, layouts, colors etc.
 		

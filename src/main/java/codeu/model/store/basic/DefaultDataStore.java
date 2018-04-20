@@ -82,7 +82,7 @@ public class DefaultDataStore {
 	//clear maps so already used data isn't recounted
 	userMap.clear();
 	messageMap.clear();
-	conversation =  null;
+	conversation = null;
 	
 	String line;
 	
@@ -98,7 +98,6 @@ public class DefaultDataStore {
 				String title = fileName+" Test Conversation";
 				User conversationCreator = userMap.get(userName);
 				conversation = new Conversation(UUID.randomUUID(), conversationCreator.getId(), title, Instant.now());
-				numConversations++;
 			}
 			
 			if(userName != null){

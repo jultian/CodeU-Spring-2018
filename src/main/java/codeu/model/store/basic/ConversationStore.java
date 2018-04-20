@@ -74,7 +74,8 @@ public class ConversationStore {
 	public boolean loadTestData() {
 		boolean loaded = false;
 		try {
-			conversations.addAll(DefaultDataStore.getInstance().getAllConversations());
+			//only one conversation object
+			conversations.add(DefaultDataStore.getInstance().getConversation());
 			loaded = true;
 		} catch (Exception e) {
 			loaded = false;
@@ -114,6 +115,16 @@ public class ConversationStore {
 		}
 		return null;
 	}
+	
+	/** Find and return the Conversation with the given id. */
+	public Conversation getConversationWithId(String id) {
+		for (Conversation conversation : conversations) {
+			if (conversation.getId().toString().equals(id)) {
+				return conversation;
+			}
+		}
+		return null;
+	}
   
   /** Sets the List of Conversations stored by this ConversationStore. */
   public void setConversations(List<Conversation> conversations) {
@@ -129,5 +140,4 @@ public class ConversationStore {
 	  if(numConversations() == 0) return 0;
 	  return MessageStore.getInstance().numMessages()/numConversations();
   }
-  
 }

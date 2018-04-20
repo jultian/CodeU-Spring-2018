@@ -70,13 +70,12 @@ public class UserStore {
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
     users = new ArrayList<User>();
-    
   }
 
 	/** Load a set of randomly-generated Message objects. */
-	public void loadTestData() {
-		users.addAll(DefaultDataStore.getInstance().getAllUsers());
-	}
+  public void loadTestData(String fileName) {
+		users.addAll(DefaultDataStore.getInstance().getAllUsers(fileName));
+  }
   
   /**
    * Access the User object with the given name.
@@ -133,7 +132,6 @@ public class UserStore {
   public int numUsers() {
 	  return users.size();
   }
-  
   //loads the messageSent field of all Users
   public void loadMessagesSent() {
 	  int count = 0;
@@ -201,5 +199,4 @@ public class UserStore {
 	  }
 	  return mostActive;
   }
- 
 }

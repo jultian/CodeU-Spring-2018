@@ -17,6 +17,7 @@
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.data.User" %>
 <%
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
@@ -57,7 +58,11 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <a href="/register">Register</a>
     <% } %>
     <a href="/about.jsp">About</a>
-    
+	<% if(request.getSession().getAttribute("user") != null){ %>
+		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+		  <a href="/testdata"> Test Data</a>
+		<% } %>
+	<% } %>
   </nav>
 
   <div id="container">

@@ -14,12 +14,13 @@
   limitations under the License.
 --%>
 
-
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.data.User" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
-
+<%@ page import="java.util.List" %>
+<%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.data.User" %>
 
 
 <!DOCTYPE html>

@@ -26,6 +26,7 @@ import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.UserStore;
 
 
+/** Don't forget to make isAdmin A private static final*/
 
 /** Class representing a registered user. */
 public class User {

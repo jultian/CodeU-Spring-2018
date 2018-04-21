@@ -82,8 +82,7 @@ public class DefaultDataStore {
 	//clear maps so already used data isn't recounted
 	userMap.clear();
 	messageMap.clear();
-	conversation =  null;
-
+	conversation = null;
 	String line;
 
 

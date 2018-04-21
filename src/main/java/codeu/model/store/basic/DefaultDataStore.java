@@ -47,33 +47,33 @@ public class DefaultDataStore {
   public static DefaultDataStore getInstance() {
     return instance;
   }
-  
+
   private Map<String, User> userMap;
   private Map<String, Message> messageMap;
   private Conversation conversation;
 
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private DefaultDataStore() {
-	
-	//stores all test user object gotten from test script 	
+
+	//stores all test user object gotten from test script
 	userMap = new HashMap<>();
-	  
+
     //stores all message objects gotten from test script
-	messageMap = new HashMap<>();	
-	
+	messageMap = new HashMap<>();
+
 	//the only conversation we will be using does not need mapped
 	conversation = null;
   }
 
-  /**creates a new user object. Is called when the current username isn't 
+  /**creates a new user object. Is called when the current username isn't
 	 mapped to anyuser object
     */
-	
-  public User makeUser(String userName){ 
+
+  public User makeUser(String userName){
 	User user = new User(UUID.randomUUID(), userName, BCrypt.hashpw("password", BCrypt.gensalt()), Instant.now());
 	return user;
   }
-  
+
   public void testData(String fileName) throws FileNotFoundException{
 	/*BufferReader takes in information from a given txt file. for now the txt file name is hardcoded
 	will eventually make it so that user can select which file they want*/
@@ -83,24 +83,23 @@ public class DefaultDataStore {
 	userMap.clear();
 	messageMap.clear();
 	conversation =  null;
-	
+
 	String line;
-	
-	
+
+
 	try{
 		while((line = br.readLine()) != null){
 			//line refers to what part of the script the scanner is on i.e "Romeo: i love juliet....... /return symbol/"
 			String userName = line.substring(0, line.indexOf(":")).trim();
 			userMap.computeIfAbsent(userName, this::makeUser);
-			
+
 			//only make new conversation if there is none
 			if(conversation == null && userName != null){
 				String title = fileName+" Test Conversation";
 				User conversationCreator = userMap.get(userName);
 				conversation = new Conversation(UUID.randomUUID(), conversationCreator.getId(), title, Instant.now());
-				numConversations++;
 			}
-			
+
 			if(userName != null){
 				User author = userMap.get(userName);
 				String content = line.substring(line.indexOf(":")+1).trim();
@@ -113,12 +112,12 @@ public class DefaultDataStore {
 	}catch(IOException e){
 		e.printStackTrace();
 	}
-	//only one conversation is made from each test file so we only need one conversation 
+	//only one conversation is made from each test file so we only need one conversation
 	PersistentStorageAgent.getInstance().writeThrough(conversation);
 	userMap.forEach((k, v) -> PersistentStorageAgent.getInstance().writeThrough(v));
 	messageMap.forEach((k, v) -> PersistentStorageAgent.getInstance().writeThrough(v));
-  }  
-  
+  }
+
   public boolean isValid() {
     return true;
   }
@@ -126,19 +125,19 @@ public class DefaultDataStore {
   public List<User> getAllUsers(String fileName) {
 	try{
 		testData(fileName);
-	}catch(IOException e){ 
+	}catch(IOException e){
 		e.printStackTrace();
-	}   
+	}
 	List<User> users = new ArrayList<User>(userMap.values());
     return users;
   }
 
-  public Conversation getConversation() { 
+  public Conversation getConversation() {
     return conversation;
   }
 
   public List<Message> getAllMessages() {
-	List<Message> messages = new ArrayList<Message>(messageMap.values());  
+	List<Message> messages = new ArrayList<Message>(messageMap.values());
     return messages;
   }
 

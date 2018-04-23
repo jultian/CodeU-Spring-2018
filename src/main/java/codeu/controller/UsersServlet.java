@@ -56,7 +56,7 @@ public class UsersServlet extends HttpServlet {
     String userName = requestUrl.substring("/users/".length());
 
 	// if the user is viewing their own profile page
-    if (userName.equals((String) request.getSession().getAttribute("user"))) { 
+    if (userName.equals((String) request.getSession().getAttribute("user"))) {
       System.out.println(userName + " has editing permissions!");
     }
 
@@ -74,7 +74,7 @@ public class UsersServlet extends HttpServlet {
       throws IOException, ServletException {
 
     String username = (String) request.getSession().getAttribute("user");
-   
+
     // redirect to a GET request
     response.sendRedirect("/users/" + username);
   }

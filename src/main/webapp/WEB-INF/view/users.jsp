@@ -5,7 +5,7 @@
 <%
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
-%> 
+%>
 
 <!DOCTYPE html>
 <html>
@@ -18,9 +18,11 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
      width: 100px;
    }
  </style>
+ <!-- Import JQuery-->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
 
+<body>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
@@ -34,9 +36,30 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <a href="/about.jsp">About</a>
   </nav>
 
+  <!-- gets profile page owner's username-->
+  <script>
+    var url = window.location.pathname;
+    var profileUser = url.substring(url.lastIndexOf('/')+1);
+  </script>
+
   <div id="container">
-    <h1><%= request.getSession().getAttribute("user") %></h1>
-    </div>
+    <h1><script>
+      document.write(profileUser)
+      </script>'s Profile Page</h1>
+  </div>
+
+  <div class="own_page"><center>
+    Edit your About Me (only you can see this)
+    <input type="text" id="aboutMe"></center>
+  </div>
+  <!-- displays edit box if user == profile page user-->
+  <script>
+  console.log("profile belongs to:" + profileUser);
+  if(profileUser == '<%=request.getSession().getAttribute("user")%>'){
+      $(".own_page").show();
+    }
+  </script>
+
 
 </body>
 </html>

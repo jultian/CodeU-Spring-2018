@@ -53,11 +53,11 @@ public class UsersServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     String requestUrl = request.getRequestURI();
-    String userName = requestUrl.substring("/users/".length());
+    String profileName = requestUrl.substring("/users/".length()); //username of profile's owner
 
 	// if the user is viewing their own profile page
-    if (userName.equals((String) request.getSession().getAttribute("user"))) {
-      System.out.println(userName + " has editing permissions!");
+    if (profileName.equals((String) request.getSession().getAttribute("user"))) {
+      System.out.println(profileName + " has editing permissions!");
     }
 
     request.getRequestDispatcher("/WEB-INF/view/users.jsp").forward(request, response);
@@ -77,5 +77,14 @@ public class UsersServlet extends HttpServlet {
 
     // redirect to a GET request
     response.sendRedirect("/users/" + username);
+  }
+
+  /* Input: name of user that owns the profile page
+  * Returns true if user is viewing their own profile page, false otherwise
+  * Checks if given user (profile page) is equal to user who is viewing the page
+  */
+  public boolean isSameUser(String profileName){
+    String username = (String) request.getSession().getAttribute("user"); // There is no HttpServletRequest request so request is undefined
+    return profileName.equals(username);
   }
 }

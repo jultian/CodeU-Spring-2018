@@ -39,12 +39,12 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
   <!-- gets profile page owner's username-->
   <script>
     var url = window.location.pathname;
-    var profileUser = url.substring(url.lastIndexOf('/')+1);
+    var profileName = url.substring(url.lastIndexOf('/')+1);
   </script>
 
   <div id="container">
     <h1><script>
-      document.write(profileUser)
+      document.write(profileName)
       </script>'s Profile Page</h1>
   </div>
 
@@ -52,14 +52,12 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     Edit your About Me (only you can see this)
     <input type="text" id="aboutMe"></center>
   </div>
-  <!-- displays edit box if user == profile page user-->
-  <script>
-  console.log("profile belongs to:" + profileUser);
-  if(profileUser == '<%=request.getSession().getAttribute("user")%>'){
-      $(".own_page").show();
-    }
-  </script>
 
+  <script>
+  if (isSameUser(profileName) == true){
+    $(".own_page").show();
+  }
+  </script>
 
 </body>
 </html>

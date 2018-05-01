@@ -202,6 +202,7 @@ public class UserStore {
 	  return mostActive;
   }
  
+  //returns list of bots. Bots are currently determined if they have the password "I'm a bot".
   public List<User> getBots(){
 		 ArrayList<User> out = new ArrayList<User>();
 		 for(User user : users) {
@@ -209,7 +210,6 @@ public class UserStore {
 				 out.add(user);
 			 }
 		 }
-	//	 System.out.println("Bot list size: " + out.size());
 		 return out;
 	}
 }

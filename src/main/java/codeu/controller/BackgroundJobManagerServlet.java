@@ -33,19 +33,16 @@ public class BackgroundJobManagerServlet extends HttpServlet{
 			if(ConversationStore.getInstance().numConversations() > 0) {	
 				//insert messages into first conversation for now
 				Conversation conversation = ConversationStore.getInstance().getAllConversations().get(0);
-			//	if(UserStore.getInstance().getBots().size() > 0) {
-					for(User user : UserStore.getInstance().getBots()) {
-						message =
-							new Message(
-									UUID.randomUUID(),
-									conversation.getId(),
-									user.getId(),
-									"This message generated at: " + formatter.format(Instant.now()),
-									Instant.now());
-						MessageStore.getInstance().addMessage(message);
-						System.out.println("User: " + user.getName() + " posted: " + message.getContent());
-					}
-			//	}
+				for(User user : UserStore.getInstance().getBots()) {
+					message =
+						new Message(
+								UUID.randomUUID(),
+								conversation.getId(),
+								user.getId(),
+								"This message generated at: " + formatter.format(Instant.now()),
+								Instant.now());
+					MessageStore.getInstance().addMessage(message);
+				}
 			}
 			
 	}

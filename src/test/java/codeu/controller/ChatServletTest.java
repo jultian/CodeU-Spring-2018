@@ -70,14 +70,13 @@ public class ChatServletTest {
 		chatServlet.setUserStore(mockUserStore);
 	}
 
-/*
+
 	@Test
 	public void testDoGet() throws IOException, ServletException {
-		Mockito.when(mockRequest.getRequestURI()).thenReturn("/chat/test_conversation");
-
 		UUID fakeConversationId = UUID.randomUUID();
 		Conversation fakeConversation =
 				new Conversation(fakeConversationId, UUID.randomUUID(), "test_conversation", Instant.now());
+		Mockito.when(mockRequest.getRequestURI()).thenReturn("/chat/"+fakeConversation.getId().toString());
 		Mockito.when(mockConversationStore.getConversationWithId(fakeConversation.getId().toString()))
 		.thenReturn(fakeConversation);
 
@@ -109,7 +108,7 @@ public class ChatServletTest {
 
 		Mockito.verify(mockResponse).sendRedirect("/conversations");
 	}
-*/
+
 	@Test
 	public void testDoPost_UserNotLoggedIn() throws IOException, ServletException {
 		Mockito.when(mockSession.getAttribute("user")).thenReturn(null);

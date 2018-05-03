@@ -60,7 +60,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <a href="/about.jsp">About</a>
 	<% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata"> Test Data</a>
+		  <a href="/testdata">Administration</a>
 		<% } %>
 	<% } %>
   </nav>

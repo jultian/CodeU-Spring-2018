@@ -86,12 +86,11 @@ public class ChatServlet extends HttpServlet {
 			throws IOException, ServletException {
 		String requestUrl = request.getRequestURI();
 		String conversationIdString = requestUrl.substring("/chat/".length());
-
+		
 		Conversation conversation = conversationStore.getConversationWithId(conversationIdString);
-		String conversationTitle = conversation.getTitle();
 		if (conversation == null) {
 			// couldn't find conversation, redirect to conversation list
-			System.out.println("Conversation was null: " + conversationTitle);
+			System.out.println("Conversation was null: " + conversationIdString);
 			response.sendRedirect("/conversations");
 			return;
 		}

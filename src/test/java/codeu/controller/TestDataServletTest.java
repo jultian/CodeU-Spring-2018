@@ -74,7 +74,7 @@ public class TestDataServletTest {
 
 		testDataServlet.doPost(mockRequest, mockResponse);
 
-		Mockito.verify(mockUserStore).loadTestData("Practice.txt");
+		Mockito.verify(mockUserStore).loadTestData("C:/Users/phili/CodeU-Spring-2018/Practice.txt");
 		Mockito.verify(mockConversationStore).loadTestData();
 		Mockito.verify(mockMessageStore).loadTestData();
 		Mockito.verify(mockResponse).sendRedirect("/");

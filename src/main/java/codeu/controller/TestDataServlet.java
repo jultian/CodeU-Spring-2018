@@ -89,7 +89,7 @@ public class TestDataServlet extends HttpServlet {
 
 		if (confirmButton != null) {
 			//hard coded file name for now 
-			userStore.loadTestData("C:/Users/phili/CodeU-Spring-2018/Practice.txt");
+			userStore.loadTestData("Practice.txt");
 			conversationStore.loadTestData();
 			messageStore.loadTestData();
 		}

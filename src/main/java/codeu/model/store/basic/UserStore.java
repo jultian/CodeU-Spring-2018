@@ -15,6 +15,7 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.User;
+
 import codeu.model.data.Message;
 import codeu.model.data.Conversation;
 import codeu.model.store.basic.MessageStore;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.UUID;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import org.mindrot.jbcrypt.BCrypt;
 
 
 /**
@@ -177,7 +179,7 @@ public class UserStore {
   }
   
   //returns User with most messages sent in the last 24 hours
- public User mostActiveUser() {
+  public User mostActiveUser() {
 	  User mostActive = null;
 	  Instant now = Instant.now();		//create Instant representing current time
 	  int numRecentMessages;					
@@ -199,4 +201,15 @@ public class UserStore {
 	  }
 	  return mostActive;
   }
+ 
+  //returns list of bots. Bots are currently determined if they have the password "I'm a bot".
+  public List<User> getBots(){
+		 ArrayList<User> out = new ArrayList<User>();
+		 for(User user : users) {
+			 if(user.getPassword().equals("I'm a bot")) {
+				 out.add(user);
+			 }
+		 }
+		 return out;
+	}
 }

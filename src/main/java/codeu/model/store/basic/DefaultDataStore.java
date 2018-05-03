@@ -15,6 +15,7 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.Conversation;
+
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.persistence.PersistentStorageAgent;
@@ -70,7 +71,8 @@ public class DefaultDataStore {
     */
 	
   public User makeUser(String userName){ 
-	User user = new User(UUID.randomUUID(), userName, BCrypt.hashpw("password", BCrypt.gensalt()), Instant.now());
+	  //mark new user as a bot
+	User user = new User(UUID.randomUUID(), userName, "I'm a bot", Instant.now());
 	return user;
   }
   

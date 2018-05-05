@@ -8,6 +8,7 @@ import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +28,7 @@ public class BackgroundJobManagerServlet extends HttpServlet{
 	
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault());
 	final double CONVERSATION_CREATION_PROB = 0.05;
-    ArrayList<Conversation> shuffledConversations;
+    List<Conversation> shuffledConversations;
 //    HashMap<File,Integer> conversationFiles;			//key: File, val: number of lines in File
     ArrayList<File> conversationFiles;				//Parallel arrays. Arrays used for random memory access function (for getting random file)
     ArrayList<Integer> fileLengths;
@@ -36,7 +37,7 @@ public class BackgroundJobManagerServlet extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		shuffledConversations = (ArrayList<Conversation>) ConversationStore.getInstance().getAllConversations();
+		shuffledConversations = ConversationStore.getInstance().getAllConversations();
 		Collections.shuffle(shuffledConversations);
 		conversationFiles = new ArrayList<>();
 		fileLengths = new ArrayList<>();
@@ -95,7 +96,7 @@ public class BackgroundJobManagerServlet extends HttpServlet{
 		MessageStore.getInstance().addMessage(message);
 	}
 	
-	//counts number of lines in a given file (uses bytes for efficiency)
+	//counts number of lines in a given file (uses bytes for efficiency
 	public int countLines(File file) throws IOException {
 	    InputStream is = new BufferedInputStream(new FileInputStream(file));
 	    try {

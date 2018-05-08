@@ -48,14 +48,24 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       </script>'s Profile Page</h1>
   </div>
 
+<!-- class that holds everything only owning user can see-->
   <div class="own_page"><center>
     Edit your About Me (only you can see this)
     <input type="text" id="aboutMe"></center>
+
+    <button onclick="updateAboutMe()">Update</button>
+
+    <script>
+    function updateAboutMe() {
+      // update to data store
+    }
+    </script>
   </div>
 
   <script>
-  if (isSameUser(profileName) == true){
-    $(".own_page").show();
+  console.log("profile belongs to:" + profileName);
+  if(profileName == '<%=request.getSession().getAttribute("user")%>'){
+     $(".own_page").show();
   }
   </script>
 

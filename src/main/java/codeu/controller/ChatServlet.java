@@ -129,9 +129,9 @@ public class ChatServlet extends HttpServlet {
 		}
 
 		String requestUrl = request.getRequestURI();
-		String conversationTitle = requestUrl.substring("/chat/".length());
+		String conversationId = requestUrl.substring("/chat/".length());
 
-		Conversation conversation = conversationStore.getConversationWithTitle(conversationTitle);
+		Conversation conversation = conversationStore.getConversationWithId(conversationId);
 		if (conversation == null) {
 			// couldn't find conversation, redirect to conversation list
 			response.sendRedirect("/conversations");
@@ -154,6 +154,6 @@ public class ChatServlet extends HttpServlet {
 		messageStore.addMessage(message);
 
 		// redirect to a GET request
-		response.sendRedirect("/chat/" + conversationTitle);
+		response.sendRedirect("/chat/" + conversationId);
 	}
 }

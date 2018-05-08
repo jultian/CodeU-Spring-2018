@@ -27,6 +27,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 <html>
 <head>
   <title><%= conversation.getTitle() %></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/css/main.css" type="text/css">
 
   <style>
@@ -36,15 +37,28 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       overflow-y: scroll
     }
   </style>
-
-  <script>
+</head>
+ <script>
     // scroll the chat div to the bottom
     function scrollChat() {
       var chatDiv = document.getElementById('chat');
       chatDiv.scrollTop = chatDiv.scrollHeight;
     };
+	
+	$(document).ready(function (){
+		$('li').click('.deleteButton', function(){
+			$(this).find(":button").toggle();
+		});
+	});
+	
+	$("button .delete").click(function(e) {
+		e.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: "/chat/"
+		});
+	});
   </script>
-</head>
 <body onload="scrollChat()">
 
   <nav>
@@ -71,7 +85,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <a href="" style="float: right">&#8635;</a></h1>
 
     <hr/>
-
+   
     <div id="chat">
       <ul>
     <%
@@ -79,7 +93,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         String author = UserStore.getInstance()
           .getUser(message.getAuthorId()).getName();
     %>
-      <li><strong><%= author %>:</strong> <%= message.getContent() %></li>
+      <li><strong><%= author %>:</strong> <%= message.getContent() %> <% if(request.getSession().getAttribute("user").equals(UserStore.getInstance().getUser(message.getAuthorId()).getName())){ %><button id = "<%= message.getId().toString() %>" class = "delete" type = "button" style = "display : none;">Delete</button><% } %></li>
     <%
       }
     %>
@@ -89,7 +103,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <hr/>
 
     <% if (request.getSession().getAttribute("user") != null) { %>
-    <form action="/chat/<%= conversation.getTitle() %>" method="POST">
+    <form action="/chat/<%= conversation.getId().toString() %>" method="POST">
         <input type="text" name="message">
         <br/>
         <button type="submit">Send</button>

@@ -56,3 +56,7 @@ input {
 button {
   font-size: 18px;
 }
+
+.own_page {
+  display: none;
+}

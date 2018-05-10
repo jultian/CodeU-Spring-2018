@@ -113,13 +113,14 @@ public class ChatServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-
+		
 		String username = (String) request.getSession().getAttribute("user");
 		if (username == null) {
 			// user is not logged in, don't let them add a message
 			response.sendRedirect("/login");
 			return;
 		}
+		
 
 		User user = userStore.getUser(username);
 		if (user == null) {
@@ -137,7 +138,12 @@ public class ChatServlet extends HttpServlet {
 			response.sendRedirect("/conversations");
 			return;
 		}
-
+		
+		if(request.getParameter("id").equals("delete")){
+			messageStore.deleteMessage(request.getParameter("messageId"));
+			response.sendRedirect(request.getParameter("redirectURL"));
+			return;
+		}
 		String messageContent = request.getParameter("message");
 
 		// this removes any HTML from the message content

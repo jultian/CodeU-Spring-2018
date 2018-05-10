@@ -130,6 +130,12 @@ public class MessageStore {
 	    return null;
 	}
   }
+  
+  public void deleteMessage(String id){
+	if(!id.equals(null)){
+		messageMap.remove(id);
+	}
+  }
 }
 
 

@@ -118,7 +118,7 @@ public class ChatServletTest {
 		Mockito.verify(mockMessageStore, Mockito.never()).addMessage(Mockito.any(Message.class));
 		Mockito.verify(mockResponse).sendRedirect("/login");
 	}
-
+	
 	@Test
 	public void testDoPost_InvalidUser() throws IOException, ServletException {
 		Mockito.when(mockSession.getAttribute("user")).thenReturn("test_username");

@@ -46,16 +46,25 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     };
 	
 	$(document).ready(function (){
-		$('li').click('.deleteButton', function(){
+		$('li').click(function(){
 			$(this).find(":button").toggle();
 		});
 	});
-	
-	$("button .delete").click(function(e) {
-		e.preventDefault();
-		$.ajax({
-			type: "POST",
-			url: "/chat/"
+	var urlString = window.location.pathname.toString();
+	$(document).ready(function() {
+		$('button.delete').click(function(e) {
+			var messageId = $(this).val();
+			document.getElementById(messageId).remove();
+			e.preventDefault();
+			$.ajax({
+				type: 'post',
+				url: urlString,
+				data: {
+					"messageId": messageId,
+					"redirectURL": urlString,
+					"id": "delete"
+				},
+			});
 		});
 	});
   </script>
@@ -93,7 +102,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         String author = UserStore.getInstance()
           .getUser(message.getAuthorId()).getName();
     %>
-      <li><strong><%= author %>:</strong> <%= message.getContent() %> <% if(request.getSession().getAttribute("user").equals(UserStore.getInstance().getUser(message.getAuthorId()).getName())){ %><button id = "<%= message.getId().toString() %>" class = "delete" type = "button" style = "display : none;">Delete</button><% } %></li>
+      <li id = "<%= message.getId().toString()%>"><strong><%= author %>:</strong> <%= message.getContent() %> <% if(request.getSession().getAttribute("user").equals(UserStore.getInstance().getUser(message.getAuthorId()).getName())){ %><button value = "<%= message.getId().toString() %>" class = "delete" type = "button" style = "display : none;">Delete</button><% } %></li>
     <%
       }
     %>
@@ -103,7 +112,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <hr/>
 
     <% if (request.getSession().getAttribute("user") != null) { %>
-    <form action="/chat/<%= conversation.getId().toString() %>" method="POST">
+    <form action="/chat/<%= conversation.getId().toString() %>" method="POST" id="myForm">
+		<input type="hidden" name="id" value="newMessgae"/>
         <input type="text" name="message">
         <br/>
         <button type="submit">Send</button>

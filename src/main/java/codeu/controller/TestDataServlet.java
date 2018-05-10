@@ -94,6 +94,6 @@ public class TestDataServlet extends HttpServlet {
 			messageStore.loadTestData();
 		}
 
-		response.sendRedirect("/");
+		response.sendRedirect("/conversations");
 	}
 }

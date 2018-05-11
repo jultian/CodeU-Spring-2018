@@ -86,12 +86,11 @@ public class ChatServlet extends HttpServlet {
 			throws IOException, ServletException {
 		String requestUrl = request.getRequestURI();
 		String conversationIdString = requestUrl.substring("/chat/".length());
-
+		
 		Conversation conversation = conversationStore.getConversationWithId(conversationIdString);
-		String conversationTitle = conversation.getTitle();
 		if (conversation == null) {
 			// couldn't find conversation, redirect to conversation list
-			System.out.println("Conversation was null: " + conversationTitle);
+			System.out.println("Conversation was null: " + conversationIdString);
 			response.sendRedirect("/conversations");
 			return;
 		}
@@ -114,13 +113,14 @@ public class ChatServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-
+		
 		String username = (String) request.getSession().getAttribute("user");
 		if (username == null) {
 			// user is not logged in, don't let them add a message
 			response.sendRedirect("/login");
 			return;
 		}
+		
 
 		User user = userStore.getUser(username);
 		if (user == null) {
@@ -130,15 +130,20 @@ public class ChatServlet extends HttpServlet {
 		}
 
 		String requestUrl = request.getRequestURI();
-		String conversationTitle = requestUrl.substring("/chat/".length());
+		String conversationId = requestUrl.substring("/chat/".length());
 
-		Conversation conversation = conversationStore.getConversationWithTitle(conversationTitle);
+		Conversation conversation = conversationStore.getConversationWithId(conversationId);
 		if (conversation == null) {
 			// couldn't find conversation, redirect to conversation list
 			response.sendRedirect("/conversations");
 			return;
 		}
-
+		
+		if(request.getParameter("id").equals("delete")){
+			messageStore.deleteMessage(request.getParameter("messageId"));
+			response.sendRedirect(request.getParameter("redirectURL"));
+			return;
+		}
 		String messageContent = request.getParameter("message");
 
 		// this removes any HTML from the message content
@@ -155,6 +160,6 @@ public class ChatServlet extends HttpServlet {
 		messageStore.addMessage(message);
 
 		// redirect to a GET request
-		response.sendRedirect("/chat/" + conversationTitle);
+		response.sendRedirect("/chat/" + conversationId);
 	}
 }

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.io.*;
 
@@ -59,9 +60,9 @@ public class DefaultDataStore {
 	//stores all test user object gotten from test script
 	userMap = new HashMap<>();
 
-    //stores all message objects gotten from test script
-	messageMap = new HashMap<>();
-
+  //stores all message objects gotten from test script
+	messageMap = new LinkedHashMap<>();	
+    
 	//the only conversation we will be using does not need mapped
 	conversation = null;
   }
@@ -95,7 +96,7 @@ public class DefaultDataStore {
 			userMap.computeIfAbsent(userName, this::makeUser);
 
 			//only make new conversation if there is none
-			if(conversation == null && userName != null){
+			if(conversation == null && (userName != null || !userName.equals(""))){
 				String title = fileName+" Test Conversation";
 				User conversationCreator = userMap.get(userName);
 				conversation = new Conversation(UUID.randomUUID(), conversationCreator.getId(), title, Instant.now());
@@ -137,9 +138,9 @@ public class DefaultDataStore {
     return conversation;
   }
 
-  public List<Message> getAllMessages() {
-	List<Message> messages = new ArrayList<Message>(messageMap.values());
-    return messages;
+  public Map<String, Message> getAllMessages() {
+	//List<Message> messages = new ArrayList<Message>(messageMap.values());  
+    return messageMap;
   }
 
   /*

@@ -47,7 +47,6 @@
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata">Administration</a>
 		<% } %>
-
 	<% } %>
 
   </nav>

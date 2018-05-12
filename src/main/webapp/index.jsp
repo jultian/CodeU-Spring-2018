@@ -22,66 +22,73 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-			<a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-      <a href="/users/<%=request.getSession().getAttribute("user")%>">Profile</a>
-    <% } else{ %>
-			<a href="/login">Login</a>
-			<a href="/register">Register</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-	<% if(request.getSession().getAttribute("user") != null){ %>
-		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata">Administration</a>
-		<% } %>
-	<% } %>
+  <nav style="background-color: #eeeeee">
+    <style type="text/css">
+      a {text-decoration: none;}
+      a:hover {text-decoration: underline;}
+    </style>
+    <a id="navTitle">
+      <a style="color: #444" href="/about.jsp">About</a>
+      <div style="float: right;text-align: right;">
+        <a style="color: #444" href="/conversations">Conversations</a>
+        <% if(request.getSession().getAttribute("user") != null){ %>
+    			<a style="color: #444">Hello <%= request.getSession().getAttribute("user") %>!</a>
+          <a style="color: #444" href="/users/<%=request.getSession().getAttribute("user")%>">Profile</a>
+        <% } else{ %>
+    			<a style="color: #444" href="/login">Login</a>
+    			<a style="color: #444" href="/register">Register</a>
+        <% } %>
+    	<% if(request.getSession().getAttribute("user") != null){ %>
+    		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+    		  <a style="color: #444" href="/testdata"> Test Data</a>
+    		<% } %>
+    	<% } %>
+    </div>
+    </a>
   </nav>
 
-  <div id="container">
+  <div id="title">
     <div
-      style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
+      style="left: 50%;margin-left:auto; margin-right:auto; margin-top: 75px; text-align: center;">
+      <h1 style="color: #757575;font-size: 450%;line-height: 1">
+        <span style="color: #4285F4">C</span><span style="color: #EA4335">o</span><span style="color: #FBBC05">d</span><span style="color: #4285F4">e</span><span style="color: #34A853">U</span>
+        <br/><span style="font-size:90%">Chat</span>
+      </h1>
+    </div>
 
-      <h1>CodeU Chat App</h1>
-      <h2>Welcome!</h2>
+    <div id="container"
+      style="margin-left:auto; margin-right:auto; margin-top: 75px; width: 800px; text-align: left">
+      <h2 style="line-height: .2">Welcome!</h2>
+      <p>
+        <a href="/login">Login</a> to get started.
+      </p>
 
-      <ul>
-        <li><a href="/login">Login</a> to get started.</li>
-        <li>Go to the <a href="/conversations">conversations</a> page to
-            create or join a conversation.</li>
-        <li>View the <a href="/about.jsp">about</a> page to learn more about the
-		project.</li>
-      </ul>
-	  
-	  <h3>Meet the team!</h3>
-	  
-	  <ul>
-		<li><b>Kevin Wang</b></li>
+    <br/>
+
+	  <h2 style="line-height: .2">Meet Team Metapod (11):</h2>
+		<b>Kevin Wang</b>
 		<p>
-			Hey everyone! I'm Kevin, the project advisor for team Metapod(11). 
+			Hey everyone! I'm Kevin, the project advisor for team Metapod(11).
 			:D I've been working at Google for a little over three years now and
-			work on Google Flights frontend. 
+			work on Google Flights frontend.
 		</p>
-		<li><b>Julia Tiang</b></li>
+		<b>Julia Tiang</b>
 		<p>
 			Hey Guys!I'm a sophomore at UNC-Chapel Hill and I'm majoring in
-			Computer Science and pursuing the pre-medical track. I'm also super 
+			Computer Science and pursuing the pre-medical track. I'm also super
 			interested in game development (I've been playing Pokemon since I was
-			like 5, but now my DS is stowed away somewhere so I don't get too 
+			like 5, but now my DS is stowed away somewhere so I don't get too
 			carried away with it). I also have a bit of experience with graphic
 			design, so I like playing around with typography, layouts, colors etc.
-		
+
 		</p>
-		<li><b>Eda Zhou</b></li>
+		<b>Eda Zhou</b>
 		<p>
 			I'm Eda and a sophomore at Worcester Polytechnic Institute (WPI for short).
 			I am studying computer science although I am not sure what specifically I enjoy
-			the most yet and want to pursue. 
+			the most yet and want to pursue. This makes me happy to try new things!
 		</p>
-		<li><b>Philip Cori</b></li>
+		<b>Philip Cori</b>
 		<p>
 			 I'm a sophomore at Santa Clara University studying Computer Science and
 			 Engineering. As of now, I'm probably most interested in Data Science
@@ -89,7 +96,7 @@
 			 anything computer science related! I'm really looking forward to working
 			 with you all!
 		</p>
-		<li><b>Maximillian George 'Oche'</b></li>
+		<b>Maximillian George 'Oche'</b>
 		<p>
 			Hey Kevin, My first name is Maximillian but I go by Oche. I am a sophomore
 			at Washington and Jefferson and I'm majoring in computer and information
@@ -97,9 +104,7 @@
 			to do with AI. I'm really not sure yet but I'm not really picky so I'm happy
 			to work on whatever.
 		</p>
-	  </ul>
-	  
-    </div>	
+    </div>
   </div>
 </body>
 </html>

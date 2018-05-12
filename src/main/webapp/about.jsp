@@ -25,6 +25,7 @@
 
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
+    <a href="/about.jsp">About</a>
     <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
       <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
@@ -33,7 +34,6 @@
       <a href="/login">Login</a>
       <a href="/register">Register</a>
     <% } %>
-    <a href="/about.jsp">About</a>
 	<% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata">Administration</a>
@@ -45,7 +45,7 @@
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>About the CodeU Chat App</h1>
+      <h1 style="font-size: 175%">About the CodeU Chat App</h1>
       <p>
         This is an example chat application designed to be a starting point
         for your CodeU project team work. Here's some stuff to think about:
@@ -74,29 +74,29 @@
         you've added.
       </p>
 	  <h2>Meet Team Metapod</h2>
-	  
+
 	  <ul>
 		<li><b>Kevin Wang</b></li>
 		<p>
-			Hey everyone! I'm Kevin, the project advisor for team Metapod(11). 
+			Hey everyone! I'm Kevin, the project advisor for team Metapod(11).
 			:D I've been working at Google for a little over three years now and
-			work on Google Flights frontend. 
+			work on Google Flights frontend.
 		</p>
 		<li><b>Julia Tiang</b></li>
 		<p>
 			Hey Guys! I'm a sophomore at UNC-Chapel Hill and I'm majoring in
-			Computer Science and pursuing the pre-medical track. I'm also super 
+			Computer Science and pursuing the pre-medical track. I'm also super
 			interested in game development (I've been playing Pokemon since I was
-			5, but now my DS is stowed away somewhere so I don't get too 
+			5, but now my DS is stowed away somewhere so I don't get too
 			carried away with it). I also have a bit of experience with graphic
 			design, so I like playing around with typography, layouts, colors etc.
-		
+
 		</p>
 		<li><b>Eda Zhou</b></li>
 		<p>
 			I'm Eda and a sophomore at Worcester Polytechnic Institute (WPI for short).
 			I am studying computer science although I am not sure what specifically I enjoy
-			the most yet and want to pursue. 
+			the most yet and want to pursue. This makes me happy to try new things!
 		</p>
 		<li><b>Philip Cori</b></li>
 		<p>

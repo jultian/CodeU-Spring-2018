@@ -28,6 +28,7 @@
 
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
+    <a href="/about.jsp">About</a>
     <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
       <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
@@ -36,7 +37,6 @@
       <a href="/login">Login</a>
       <a href="/register">Register</a>
     <% } %>
-    <a href="/about.jsp">About</a>
 	<% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata">Administration</a>
@@ -51,7 +51,7 @@
     <% } %>
 
     <% if(request.getSession().getAttribute("user") != null){ %>
-      <h1>New Conversation</h1>
+      <h1 style="font-size: 175%">New Conversation</h1>
       <form action="/conversations" method="POST">
           <div class="form-group">
             <label class="form-control-label">Title:</label>
@@ -64,7 +64,7 @@
       <hr/>
     <% } %>
 
-    <h1>Conversations</h1>
+    <h1 style="font-size: 200%">Conversations</h1>
 
     <%
     List<Conversation> conversations =

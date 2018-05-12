@@ -96,7 +96,7 @@
 		<p>
 			I'm Eda and a sophomore at Worcester Polytechnic Institute (WPI for short).
 			I am studying computer science although I am not sure what specifically I enjoy
-			the most yet and want to pursue.
+			the most yet and want to pursue. This makes me happy to try new things!
 		</p>
 		<li><b>Philip Cori</b></li>
 		<p>

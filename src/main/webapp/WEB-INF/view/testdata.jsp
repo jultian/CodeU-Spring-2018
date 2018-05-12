@@ -46,14 +46,22 @@
     
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata">Administration</a>
-		<% } %>
+		<% }else{ %>
+		  <a href="/testdata">App Statistics</a>
+		<%}%>
 		
 	<% } %>
 	
   </nav>
 
   <div id="container">
-    <h1>Administration</h1>
+  <% if(request.getSession().getAttribute("user") != null){ %>
+		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+		  <h1>Administration</h1>
+		<% }else{ %>
+		  <h1>App Statistics</h1>
+		<% } %>
+	<% } %>
     <hr>
     <p> Users: <%=UserStore.getInstance().numUsers() %> </p>
     <p> Conversations: <%=ConversationStore.getInstance().numConversations()%> </p>

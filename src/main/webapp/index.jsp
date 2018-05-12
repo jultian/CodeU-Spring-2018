@@ -22,7 +22,6 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-
   <nav style="background-color: #eeeeee">
     <style type="text/css">
       a {text-decoration: none;}

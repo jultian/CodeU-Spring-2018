@@ -20,7 +20,11 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.function.Function;
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
  * saves to PersistentStorageAgent. It's a singleton so all servlet classes can access the same
@@ -59,12 +63,12 @@ public class MessageStore {
   private PersistentStorageAgent persistentStorageAgent;
 
   /** The in-memory list of Messages. */
-  private List<Message> messages;
+  private HashMap<String, Message> messageMap;
 
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private MessageStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    messages = new ArrayList<>();
+	messageMap = new LinkedHashMap<>();
   }
 
   /**
@@ -75,7 +79,7 @@ public class MessageStore {
   public boolean loadTestData() {
     boolean loaded = false;
     try {
-      messages.addAll(DefaultDataStore.getInstance().getAllMessages());
+	  DefaultDataStore.getInstance().getAllMessages().forEach(messageMap::putIfAbsent);
       loaded = true;
     } catch (Exception e) {
       loaded = false;
@@ -86,7 +90,7 @@ public class MessageStore {
 
   /** Add a new message to the current set of messages known to the application. */
   public void addMessage(Message message) {
-    messages.add(message);
+	messageMap.put(message.getId().toString(), message);
     persistentStorageAgent.writeThrough(message);
     User user = UserStore.getInstance().getUser(message.getAuthorId());
     if(user != null) {			//do this check so test passes (change MessageStoreTest later)
@@ -98,30 +102,44 @@ public class MessageStore {
   public List<Message> getMessagesInConversation(UUID conversationId) {
 
     List<Message> messagesInConversation = new ArrayList<>();
-
-    for (Message message : messages) {
-      if (message.getConversationId().equals(conversationId)) {
-        messagesInConversation.add(message);
-      }
-    }
+	
+	messageMap.forEach((key, value)->{
+		if(value.getConversationId().equals(conversationId)){
+			messagesInConversation.add(value);
+		}
+	});
 
     return messagesInConversation;
   }
 
   /** Sets the List of Messages stored by this MessageStore. */
   public void setMessages(List<Message> messages) {
-	this.messages = messages;
+	messages.forEach(e->messageMap.put(e.getId().toString(),e));
+	//I cannot seem to get this stream to work with a linkedMap
+	//Map<String, Message> messageMap1 = messages.stream().collect(Collectors.toMap(m -> m.getId().toString(), m -> m));
   }
   
   public int numMessages() {
-	  return messages.size();
+	 return messageMap.size();
   }
   
   public Message getMessage(UUID id) {
-	  for(Message message : messages) {
-		  if(message.getId().equals(id))
-			  return message;
-	  }
-	  return null;
+	if(messageMap.get(id.toString()) != null){
+		return messageMap.get(id.toString());
+	}else{
+	    return null;
+	}
+  }
+  
+  public void deleteMessage(String id){
+	if(!id.equals(null)){
+		messageMap.remove(id);
+	}
   }
 }
+
+
+
+
+
+

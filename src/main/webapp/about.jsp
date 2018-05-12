@@ -36,7 +36,7 @@
     <% } %>
 	<% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata"> Test Data</a>
+		  <a href="/testdata">Administration</a>
 		<% } %>
 	<% } %>
   </nav>
@@ -108,7 +108,7 @@
 		</p>
 		<li><b>Maximillian George 'Oche'</b></li>
 		<p>
-			Hey Kevin, My first name is Maximillian but I go by Oche. I am a sophomore
+			Hey everyone, my first name is Maximillian but I go by Oche. I am a sophomore
 			at Washington and Jefferson and I'm majoring in computer and information
 			studies. I'm really interested in working on game programs maybe or something
 			to do with AI. I'm really not sure yet but I'm not really picky so I'm happy

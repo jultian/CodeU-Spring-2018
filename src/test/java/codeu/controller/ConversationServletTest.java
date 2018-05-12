@@ -150,6 +150,6 @@ public class ConversationServletTest {
 		Mockito.verify(mockConversationStore).addConversation(conversationArgumentCaptor.capture());
 		Assert.assertEquals(conversationArgumentCaptor.getValue().getTitle(), "test_conversation");
 
-		Mockito.verify(mockResponse).sendRedirect("/chat/test_conversation");
+		Mockito.verify(mockResponse).sendRedirect("/chat/"+conversationArgumentCaptor.getValue().getId().toString());
 	}
 }

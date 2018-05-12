@@ -26,7 +26,7 @@
    <% } %>
    <% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata"> Test Data</a>
+		  <a href="/testdata">Administration</a>
 		<% } %>
 	<% } %>
  </nav>

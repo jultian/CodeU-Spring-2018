@@ -16,6 +16,7 @@
 
  <nav>
    <a id="navTitle" href="/">CodeU Chat App</a>
+   <a href="/about.jsp">About</a>
    <a href="/conversations">Conversations</a>
    <% if(request.getSession().getAttribute("user") != null){ %>
      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
@@ -23,7 +24,6 @@
      <a href="/login">Login</a>
      <a href="/register">Register</a>
    <% } %>
-   <a href="/about.jsp">About</a>
    <% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata"> Test Data</a>
@@ -32,7 +32,7 @@
  </nav>
 
  <div id="container">
-   <h1>Register</h1>
+   <h1 style="font-size: 175%">Register</h1>
    <% if (request.getAttribute("error") != null){ %>
 	 <h2 style="color:red"><%= request.getAttribute("error") %></h2>
    <% } %>

@@ -49,6 +49,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
+    <a href="/about.jsp">About</a>
     <a href="/conversations">Conversations</a>
       <% if (request.getSession().getAttribute("user") != null) { %>
     <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
@@ -57,7 +58,6 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <a href="/login">Login</a>
       <a href="/register">Register</a>
     <% } %>
-    <a href="/about.jsp">About</a>
 	<% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata"> Test Data</a>
@@ -67,7 +67,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
   <div id="container">
 
-    <h1><%= conversation.getTitle() %>
+    <h1 style="font-size: 175%"><%= conversation.getTitle() %>
       <a href="" style="float: right">&#8635;</a></h1>
 
     <hr/>

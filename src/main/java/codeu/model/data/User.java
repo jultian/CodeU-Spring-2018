@@ -48,11 +48,11 @@ public class User {
    * @param password the password of this User
    * @param creation the creation time of this User
    */
-  public User(UUID id, String name, String hashedPassword, Instant creation) {
+  public User(UUID id, String name, String hashedPassword, String bio, Instant creation) {
     this.id = id;
     this.name = name;
     this.hashedPassword = hashedPassword;
-    this.bio = ""; // default about me section is empty
+    this.bio = bio;
     this.creation = creation;
     messagesSent = new ArrayList<>();
   }

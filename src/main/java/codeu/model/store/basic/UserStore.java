@@ -142,6 +142,7 @@ public class UserStore {
 	  for (User user: users) {
 		 if (user.getName().equals(username)) {
 			 user.setBio(bio);
+			 persistentStorageAgent.writeThrough(user);
 			 // System.out.println(user.getBio()); // testing
 		 }
 	  }

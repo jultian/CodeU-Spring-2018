@@ -34,6 +34,7 @@ public class User {
   private final UUID id;
   private final String name;
   private final String hashedPassword;
+  private String bio; // not final, can change
   private final Instant creation;
   private static final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault());
   private List<Message> messagesSent;
@@ -51,6 +52,7 @@ public class User {
     this.id = id;
     this.name = name;
     this.hashedPassword = hashedPassword;
+    this.bio = ""; // default about me section is empty
     this.creation = creation;
     messagesSent = new ArrayList<>();
   }
@@ -78,6 +80,14 @@ public class User {
   /** Checks if the current user is an admin, currently just has our usernames hardcoded*/
   public boolean isAdmin(){
 	  return name.equals("yourboyoch") || name.equals("ezhou") || name.equals("philip") || name.equals("jtian");
+  }
+  
+  public String getBio() {
+	  return bio;
+  }
+  
+  public void setBio(String bio) {
+	  this.bio = bio;
   }
   
   //returns a readable string representing User's registration time

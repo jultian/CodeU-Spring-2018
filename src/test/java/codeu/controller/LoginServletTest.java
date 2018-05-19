@@ -81,8 +81,7 @@ public class LoginServletTest {
 		UserStore mockUserStore = Mockito.mock(UserStore.class);
 		Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(true);       //UserStore should return that the user is registered
 
-		User mockUser = new User(UUID.randomUUID(),"test username",BCrypt.hashpw("invalid password", BCrypt.gensalt()), Instant.now());     //create a mock user that has a password ("valid password") NOT matching the password entered ("invalid password")
-		// ??? ask Kevin if this is right
+		User mockUser = new User(UUID.randomUUID(),"test username",BCrypt.hashpw("invalid password", BCrypt.gensalt()), "", Instant.now());     //create a mock user that has a password ("valid password") NOT matching the password entered ("invalid password")
 		
 		Mockito.when(mockUserStore.getUser("test username")).thenReturn(mockUser);                      //return this user when it's called
 
@@ -103,8 +102,7 @@ public class LoginServletTest {
 		UserStore mockUserStore = Mockito.mock(UserStore.class);
 		Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(true);     //UserStore should return that the user is registered
 		
-		User mockUser = new User(UUID.randomUUID(),"test username", BCrypt.hashpw(mockRequest.getParameter("password"), BCrypt.gensalt()),Instant.now());      //create mock user with password matching password entered
-		// ??? ask Kevin if this is right
+		User mockUser = new User(UUID.randomUUID(),"test username", BCrypt.hashpw(mockRequest.getParameter("password"), BCrypt.gensalt()), "", Instant.now());      //create mock user with password matching password entered
 		
 		Mockito.when(mockUserStore.getUser("test username")).thenReturn(mockUser);
 

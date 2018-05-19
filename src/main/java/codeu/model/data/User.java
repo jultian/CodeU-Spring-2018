@@ -34,6 +34,7 @@ public class User {
   private final UUID id;
   private final String name;
   private final String hashedPassword;
+  private String bio; // not final, can change
   private final Instant creation;
   private static final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault());
   private List<Message> messagesSent;
@@ -47,10 +48,11 @@ public class User {
    * @param password the password of this User
    * @param creation the creation time of this User
    */
-  public User(UUID id, String name, String hashedPassword, Instant creation) {
+  public User(UUID id, String name, String hashedPassword, String bio, Instant creation) {
     this.id = id;
     this.name = name;
     this.hashedPassword = hashedPassword;
+    this.bio = bio;
     this.creation = creation;
     messagesSent = new ArrayList<>();
   }
@@ -78,6 +80,14 @@ public class User {
   /** Checks if the current user is an admin, currently just has our usernames hardcoded*/
   public boolean isAdmin(){
 	  return name.equals("yourboyoch") || name.equals("ezhou") || name.equals("philip") || name.equals("jtian");
+  }
+  
+  public String getBio() {
+	  return bio;
+  }
+  
+  public void setBio(String bio) {
+	  this.bio = bio;
   }
   
   //returns a readable string representing User's registration time

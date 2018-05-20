@@ -28,8 +28,7 @@
     <a href="/about.jsp">About</a>
     <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-      <a href="/users/<%=request.getSession().getAttribute("user")%>">Profile</a>
+      <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
     <% } else{ %>
       <a href="/login">Login</a>
       <a href="/register">Register</a>
@@ -86,12 +85,9 @@
 		</p>
 		<li><b>Julia Tiang</b></li>
 		<p>
-			Hey Guys! I'm a sophomore at UNC-Chapel Hill and I'm majoring in
-			Computer Science and pursuing the pre-medical track. I'm also super
-			interested in game development (I've been playing Pokemon since I was
-			5, but now my DS is stowed away somewhere so I don't get too
-			carried away with it). I also have a bit of experience with graphic
-			design, so I like playing around with typography, layouts, colors etc.
+		  Hey! I'm a rising junior at UNC-Chapel Hill and I'm double majoring in
+      Computer Science and Neuroscience. Besides coding, I also do a bit of graphic design
+      and I enjoy tinkering with typography, layouts, colors etc.
 
 		</p>
 		<li><b>Eda Zhou</b></li>

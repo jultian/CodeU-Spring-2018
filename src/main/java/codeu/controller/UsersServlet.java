@@ -77,7 +77,9 @@ public class UsersServlet extends HttpServlet {
       throws IOException, ServletException {
 
     String username = (String) request.getSession().getAttribute("user");
-
+    String bio = (String)request.getParameter("bio");
+    userStore.updateProfile(username, bio); // add bio to User in User Store
+    
     // redirect to a GET request
     response.sendRedirect("/users/" + username);
   }

@@ -157,7 +157,7 @@ public class ChatServlet extends HttpServlet {
 						cleanedMessageContent,
 						Instant.now());
 
-		messageStore.addMessage(message);
+		messageStore.addMessage(message); // *****
 
 		// redirect to a GET request
 		response.sendRedirect("/chat/" + conversationId);

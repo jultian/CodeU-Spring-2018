@@ -44,7 +44,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       var chatDiv = document.getElementById('chat');
       chatDiv.scrollTop = chatDiv.scrollHeight;
     };
-	
+
 	$(document).ready(function (){
 		$('li').click(function(){
 			$(this).find(":button").toggle();
@@ -74,9 +74,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/about.jsp">About</a>
     <a href="/conversations">Conversations</a>
-      <% if (request.getSession().getAttribute("user") != null) { %>
-    <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <a href="/users/<%=request.getSession().getAttribute("user")%>">Profile</a>
+    <% if (request.getSession().getAttribute("user") != null) { %>
+      <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
     <% } else { %>
       <a href="/login">Login</a>
       <a href="/register">Register</a>
@@ -96,7 +95,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <a href="" style="float: right">&#8635;</a></h1>
 
     <hr/>
-   
+
     <div id="chat">
       <ul>
     <%

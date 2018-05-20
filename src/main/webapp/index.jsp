@@ -32,8 +32,7 @@
       <div style="float: right;text-align: right;">
         <a style="color: #444" href="/conversations">Conversations</a>
         <% if(request.getSession().getAttribute("user") != null){ %>
-    			<a style="color: #444">Hello <%= request.getSession().getAttribute("user") %>!</a>
-          <a style="color: #444" href="/users/<%=request.getSession().getAttribute("user")%>">Profile</a>
+    			<a style="color: #444" href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
         <% } else{ %>
     			<a style="color: #444" href="/login">Login</a>
     			<a style="color: #444" href="/register">Register</a>

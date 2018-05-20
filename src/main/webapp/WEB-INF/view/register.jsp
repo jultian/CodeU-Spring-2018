@@ -26,8 +26,10 @@
    <% } %>
    <% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata"> Administration</a>
-		<% } %>
+		  <a href="/testdata">Administration</a>
+		<% } else if(request.getSession().getAttribute("user") !=  null) {%>
+		  <a href="/testdata">App Statistics</a>
+		<%}%>
 	<% } %>
  </nav>
 

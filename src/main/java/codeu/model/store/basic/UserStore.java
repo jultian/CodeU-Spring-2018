@@ -28,6 +28,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import org.mindrot.jbcrypt.BCrypt;
 
+// create function update profile
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -128,12 +129,25 @@ public class UserStore {
    * is loaded from Datastore.
    */
   public void setUsers(List<User> users) {
-    this.users = users;
+	  this.users = users;
   }
   
   public int numUsers() {
 	  return users.size();
   }
+  
+  //updates about me (bio) of user
+  public void updateProfile(String username, String bio) {
+	  // System.out.println("updateProfie runs"); // testing
+	  for (User user: users) {
+		 if (user.getName().equals(username)) {
+			 user.setBio(bio);
+			 persistentStorageAgent.writeThrough(user);
+			 // System.out.println(user.getBio()); // testing
+		 }
+	  }
+  }
+  
   //loads the messageSent field of all Users
   public void loadMessagesSent() {
 	  int count = 0;

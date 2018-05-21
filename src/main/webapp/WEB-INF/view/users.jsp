@@ -2,6 +2,7 @@
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
+
 <%
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
@@ -28,6 +29,13 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <a href="/about.jsp">About</a>
     <a href="/conversations">Conversations</a>
       <% if (request.getSession().getAttribute("user") != null) { %>
+        <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+        <a href="/users/<%=request.getSession().getAttribute("user")%>">Profile</a>
+		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+		  <a href="/testdata">Administration</a>
+		<% } else if(request.getSession().getAttribute("user") !=  null) {%>
+		  <a href="/testdata">App Statistics</a>
+		<%}%>
         <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
         <% } else { %>
       <a href="/login">Login</a>
@@ -45,20 +53,18 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <h1 style="font-size: 175%"><script>
       document.write(profileName)
       </script>'s Profile Page</h1>
+      <p><%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getBio()%></p>
   </div>
 
 <!-- class that holds everything only owning user can see-->
   <div class="own_page"><center>
     Edit your About Me (only you can see this)
-    <input type="text" id="aboutMe"></center>
+      <form action="/users" method = "POST">
+        <input type="text" name = "bio" id = "bio"></center>
+        <button type ="submit" style="display: block; margin: 0 auto;">Update</button>
+      </form>
+      <br/><br/>
 
-    <button onclick="updateAboutMe()">Update</button>
-
-    <script>
-    function updateAboutMe() {
-      // update to data store
-    }
-    </script>
   </div>
 
   <script>

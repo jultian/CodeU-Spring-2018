@@ -73,7 +73,7 @@ public class DefaultDataStore {
 
   public User makeUser(String userName){
 	  //mark new user as a bot
-	User user = new User(UUID.randomUUID(), userName, "I'm a bot", Instant.now());
+	User user = new User(UUID.randomUUID(), userName, "I'm a bot", "", Instant.now()); // default: empty bio
 	return user;
   }
 

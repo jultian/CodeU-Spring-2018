@@ -60,6 +60,23 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
   </div>
 
+  <div id="messages"><center>
+    <h1 style="font-size: 175%"><script>
+      document.write(profileName)
+    </script>'s Sent Messages
+    </h1>
+    <p>
+      <textarea id = "myMessages"
+        rows = "50"
+        cols = "2">
+          <% for(int i = 0; i < UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().size(); i++){ %>
+            <%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().get(i).getTimeStamp()%>
+            <%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().get(i).getContent()%>
+        <% } %>
+        </textarea>
+    </p>
+  </div></center>
+
   <script>
   console.log("profile belongs to:" + profileName);
   if(profileName == '<%=request.getSession().getAttribute("user")%>'){

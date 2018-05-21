@@ -21,23 +21,29 @@
   <title>CodeU Chat App</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
 
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/about.jsp">About</a>
-    <a href="/conversations">Conversations</a>
+<body>
+  <nav style="background-color: #eeeeee">
+    <style type="text/css">
+      a {text-decoration: none;}
+      a:hover {text-decoration: underline;}
+    </style>
+    <a style="color: #444" id="navTitle" href="/">CodeU Chat App</a>
+    <a style="color: #444" href="/about.jsp">About</a>
+    <div style="float: right; text-align: right;">
+    <a style="color: #444" href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
-      <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+      <a style="color: #444" href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
     <% } else{ %>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
+      <a style="color: #444" href="/login">Login</a>
+      <a style="color: #444" href="/register">Register</a>
     <% } %>
 	<% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata">Administration</a>
+		  <a style="color: #444" href="/testdata">Administration</a>
 		<% } %>
-	<% } %>
+  <% } %>
+  </div>
   </nav>
 
   <div id="container">

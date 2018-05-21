@@ -23,18 +23,29 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
-<body>
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/about.jsp">About</a>
-    <a href="/conversations">Conversations</a>
-      <% if (request.getSession().getAttribute("user") != null) { %>
-        <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-        <% } else { %>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    <% } %>
-  </nav>
+  <body>
+      <nav style="background-color: #eeeeee">
+        <style type="text/css">
+          a {text-decoration: none;}
+          a:hover {text-decoration: underline;}
+        </style>
+        <a style="color: #444" id="navTitle" href="/">CodeU Chat App</a>
+        <a style="color: #444" href="/about.jsp">About</a>
+        <div style="float: right; text-align: right;">
+        <a style="color: #444" href="/conversations">Conversations</a>
+        <% if(request.getSession().getAttribute("user") != null){ %>
+          <a style="color: #444" href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+        <% } else{ %>
+          <a style="color: #444" href="/login">Login</a>
+          <a style="color: #444" href="/register">Register</a>
+        <% } %>
+      <% if(request.getSession().getAttribute("user") != null){ %>
+        <% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+          <a style="color: #444" href="/testdata">Administration</a>
+        <% } %>
+      <% } %>
+      </div>
+      </nav>
 
   <!-- gets profile page owner's username-->
   <script>
@@ -67,8 +78,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     </h1>
     <p>
       <textarea id = "myMessages"
-        rows = "50"
-        cols = "2">
+        rows = "<%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().size()%>"
+        cols = "1">
           <% for(int i = 0; i < UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().size(); i++){ %>
             <%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().get(i).getTimeStamp()%>
             <%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().get(i).getContent()%>

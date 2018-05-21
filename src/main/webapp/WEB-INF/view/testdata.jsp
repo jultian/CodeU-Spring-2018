@@ -42,10 +42,11 @@
       <a href="/register">Register</a>
     <% } %>
     <% if(request.getSession().getAttribute("user") != null){ %>
-
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata">Administration</a>
-		<% } %>
+		<% } else if(request.getSession().getAttribute("user") !=  null) {%>
+		  <a href="/testdata">App Statistics</a>
+		<%}%>
 	<% } %>
 
   </nav>
@@ -67,12 +68,16 @@
     	<p> Wordiest user: <%=UserStore.getInstance().wordiestUser().getName() %></p>
     <% } %>
     <hr>
-    <p>This will load a number of users, conversations, and messages for testing
+	<% if(request.getSession().getAttribute("user") != null){ %>
+		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+		<p>This will load a number of users, conversations, and messages for testing
         purposes.</p>
-    <form action="/testdata" method="POST">
-      <button type="submit" value="confirm" name="confirm">Confirm</button>
-      <button type="submit" value="cancel" name="cancel">Do Nothing</button>
-    </form>
+		<form action="/testdata" method="POST">
+		  <button type="submit" value="confirm" name="confirm">Confirm</button>
+		  <button type="submit" value="cancel" name="cancel">Do Nothing</button>
+		</form>
+		<%}%>
+	<%}%>
   </div>
 </body>
 </html>

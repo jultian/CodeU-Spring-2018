@@ -29,6 +29,13 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <a href="/about.jsp">About</a>
     <a href="/conversations">Conversations</a>
       <% if (request.getSession().getAttribute("user") != null) { %>
+        <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+        <a href="/users/<%=request.getSession().getAttribute("user")%>">Profile</a>
+		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+		  <a href="/testdata">Administration</a>
+		<% } else if(request.getSession().getAttribute("user") !=  null) {%>
+		  <a href="/testdata">App Statistics</a>
+		<%}%>
         <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
         <% } else { %>
       <a href="/login">Login</a>

@@ -41,14 +41,16 @@
           <a style="color: #444" href="/login">Login</a>
           <a style="color: #444" href="/register">Register</a>
         <% } %>
-      <% if(request.getSession().getAttribute("user") != null){ %>
+        <% if(request.getSession().getAttribute("user") != null){ %>
         <% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
           <a style="color: #444" href="/testdata">Administration</a>
-        <% } %>
+        <% } else if(request.getSession().getAttribute("user") !=  null) {%>
+          <a style="color: #444" href="/testdata">App Statistics</a>
+        <%}%>
       <% } %>
       </div>
       </nav>
-
+  
   <div id="container">
 
     <% if(request.getAttribute("error") != null){ %>

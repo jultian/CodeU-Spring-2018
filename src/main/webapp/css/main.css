@@ -59,6 +59,9 @@ h1 {
 
 input {
   font-size: 18px;
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 button {
@@ -67,4 +70,14 @@ button {
 
 .own_page {
   display: none;
+}
+
+textarea {
+  font-family: sans-serif;
+  line-height: 1.0;
+  font-size: 18px;
+  text-align: left;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }

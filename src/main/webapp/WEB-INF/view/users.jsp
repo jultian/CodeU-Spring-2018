@@ -18,6 +18,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
      display: inline-block;
      width: 100px;
    }
+   
  </style>
  <!-- Import JQuery-->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -58,35 +59,32 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       document.write(profileName)
       </script>'s Profile Page</h1>
       <p><%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getBio()%></p>
+
+    <!-- class that holds everything only owning user can see-->
+    <div class="own_page">Edit your About Me (only you can see this)
+          <form action="/users" method = "POST">
+            <input type="text">
+            <button type ="submit">Update</button>
+          </form>
+          <br/>
+    </div>
+
   </div>
 
-<!-- class that holds everything only owning user can see-->
-  <div class="own_page"><center>
-    Edit your About Me (only you can see this)
-      <form action="/users" method = "POST">
-        <input type="text" name = "bio" id = "bio"></center>
-        <button type ="submit" style="display: block; margin: 0 auto;">Update</button>
-      </form>
-      <br/><br/>
-
-  </div>
-
-  <div id="messages"><center>
-    <h1 style="font-size: 175%"><script>
-      document.write(profileName)
-    </script>'s Sent Messages
+  <div id="container">
+    <h1 style = "font-size: 175%"><script>document.write(profileName)
+      </script>'s Sent Messages
     </h1>
-    <p>
-      <textarea id = "myMessages"
+    <p> 
+      <textarea
         rows = "<%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().size()%>"
         cols = "1">
           <% for(int i = 0; i < UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().size(); i++){ %>
-            <%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().get(i).getTimeStamp()%>
-            <%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().get(i).getContent()%>
+            <%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().get(i).getTimeStamp()%> <%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent().get(i).getContent()%>
         <% } %>
-        </textarea>
+      </textarea>
     </p>
-  </div></center>
+  </div>
 
   <script>
   console.log("profile belongs to:" + profileName);

@@ -73,13 +73,9 @@
 		</p>
 		<b>Julia Tiang</b>
 		<p>
-			Hey Guys!I'm a sophomore at UNC-Chapel Hill and I'm majoring in
-			Computer Science and pursuing the pre-medical track. I'm also super
-			interested in game development (I've been playing Pokemon since I was
-			like 5, but now my DS is stowed away somewhere so I don't get too
-			carried away with it). I also have a bit of experience with graphic
-			design, so I like playing around with typography, layouts, colors etc.
-
+      Hey! I'm a rising junior at UNC-Chapel Hill and I'm double majoring in
+      Computer Science and Neuroscience. Besides coding, I also do a bit of graphic design
+      and I enjoy tinkering with typography, layouts, colors etc.
 		</p>
 		<b>Eda Zhou</b>
 		<p>

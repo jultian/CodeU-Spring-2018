@@ -81,7 +81,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         <a style="color: #444" href="/conversations">Conversations</a>
         <% if(request.getSession().getAttribute("user") != null){ %>
           <a style="color: #444" href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-        <% } else{ %>
+        <% } else { %>
           <a style="color: #444" href="/login">Login</a>
           <a style="color: #444" href="/register">Register</a>
         <% } %>
@@ -90,6 +90,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
           <a style="color: #444" href="/testdata">Administration</a>
         <% } else if(request.getSession().getAttribute("user") !=  null) { %>
           <a style="color: #444" href="/testdata">App Statistics</a>
+      <% } %>
       <% } %>
       </div>
       </nav>

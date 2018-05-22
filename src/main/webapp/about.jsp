@@ -21,61 +21,40 @@
   <title>CodeU Chat App</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
 
+<body>
   <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
+    <style type="text/css">
+      a {transition-duration: 0.5s; text-decoration: none;}
+      a:hover {opacity: 0.5;}
+    </style>
+    <a id="navTitle" href="/">
+      <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
+    </a>
     <a href="/about.jsp">About</a>
+    <div style="float: right; text-align: right;">
     <a href="/conversations">Conversations</a>
+      <% if(request.getSession().getAttribute("user") != null){ %>
+        <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+      <% } else{ %>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+      <% } %>
     <% if(request.getSession().getAttribute("user") != null){ %>
-      <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
+      <% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+        <a href="/testdata">Administration</a>
+      <% } else if(request.getSession().getAttribute("user") !=  null) {%>
+        <a href="/testdata">App Statistics</a>
+      <%}%>
     <% } %>
-	<% if(request.getSession().getAttribute("user") != null){ %>
-		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata">Administration</a>
-		<% } else if(request.getSession().getAttribute("user") !=  null) {%>
-		  <a href="/testdata">App Statistics</a>
-		<%}%>
-	<% } %>
+  </div>
   </nav>
 
   <div id="container">
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1 style="font-size: 175%">About the CodeU Chat App</h1>
-      <p>
-        This is an example chat application designed to be a starting point
-        for your CodeU project team work. Here's some stuff to think about:
-      </p>
-
-      <ul>
-        <li><strong>Algorithms and data structures:</strong> We've made the app
-            and the code as simple as possible. You will have to extend the
-            existing data structures to support your enhancements to the app,
-            and also make changes for performance and scalability as your app
-            increases in complexity.</li>
-        <li><strong>Look and feel:</strong> The focus of CodeU is on the Java
-          side of things, but if you're particularly interested you might use
-          HTML, CSS, and JavaScript to make the chat app prettier.</li>
-        <li><strong>Customization:</strong> Think about a group you care about.
-          What needs do they have? How could you help? Think about technical
-          requirements, privacy concerns, and accessibility and
-          internationalization.</li>
-      </ul>
-
-      <p>
-        This is your code now. Get familiar with it and get comfortable
-        working with your team to plan and make changes. Start by updating the
-        homepage and this about page to tell your users more about your team.
-        This page should also be used to describe the features and improvements
-        you've added.
-      </p>
-	  <h2>Meet Team Metapod</h2>
-
+	  <h2>Meet Team Metapod (#11) </h2>
 	  <ul>
 		<li><b>Kevin Wang</b></li>
 		<p>

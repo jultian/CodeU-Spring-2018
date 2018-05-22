@@ -14,24 +14,32 @@
 </head>
 <body>
 
- <nav>
-   <a id="navTitle" href="/">CodeU Chat App</a>
-   <a href="/about.jsp">About</a>
-   <a href="/conversations">Conversations</a>
-   <% if(request.getSession().getAttribute("user") != null){ %>
-     <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-   <% } else{ %>
-     <a href="/login">Login</a>
-     <a href="/register">Register</a>
-   <% } %>
-   <% if(request.getSession().getAttribute("user") != null){ %>
+    <nav>
+        <style type="text/css">
+          a {transition-duration: 0.5s; text-decoration: none;}
+          a:hover {opacity: 0.5;}
+        </style>
+        <a id="navTitle" href="/">
+          <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
+        </a>
+        <a href="/about.jsp">About</a>
+        <div style="float: right; text-align: right;">
+        <a href="/conversations">Conversations</a>
+        <% if(request.getSession().getAttribute("user") != null){ %>
+          <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+        <% } else{ %>
+          <a href="/login">Login</a>
+          <a href="/register">Register</a>
+        <% } %>
+            <% if(request.getSession().getAttribute("user") != null){ %>
 		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
 		  <a href="/testdata">Administration</a>
 		<% } else if(request.getSession().getAttribute("user") !=  null) {%>
 		  <a href="/testdata">App Statistics</a>
 		<%}%>
 	<% } %>
- </nav>
+      </div>
+      </nav>
 
  <div id="container">
    <h1 style="font-size: 175%">Login</h1>

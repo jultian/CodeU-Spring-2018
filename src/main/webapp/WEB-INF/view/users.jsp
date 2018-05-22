@@ -18,30 +18,39 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
      display: inline-block;
      width: 100px;
    }
+   
  </style>
  <!-- Import JQuery-->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
-<body>
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/about.jsp">About</a>
-    <a href="/conversations">Conversations</a>
-      <% if (request.getSession().getAttribute("user") != null) { %>
-        <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-        <a href="/users/<%=request.getSession().getAttribute("user")%>">Profile</a>
-		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata">Administration</a>
-		<% } else if(request.getSession().getAttribute("user") !=  null) {%>
-		  <a href="/testdata">App Statistics</a>
-		<%}%>
-        <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-        <% } else { %>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    <% } %>
-  </nav>
+  <body>
+      <nav>
+        <style type="text/css">
+          a {transition-duration: 0.5s; text-decoration: none;}
+          a:hover {opacity: 0.5;}
+        </style>
+        <a id="navTitle" href="/">
+          <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
+        </a>
+        <a href="/about.jsp">About</a>
+        <div style="float: right; text-align: right;">
+        <a href="/conversations">Conversations</a>
+        <% if(request.getSession().getAttribute("user") != null){ %>
+          <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+        <% } else{ %>
+          <a href="/login">Login</a>
+          <a href="/register">Register</a>
+        <% } %>
+      <% if(request.getSession().getAttribute("user") != null){ %>
+        <% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+          <a href="/testdata">Administration</a>
+        <% } else if(request.getSession().getAttribute("user") !=  null) {%>
+          <a href="/testdata">App Statistics</a>
+        <%}%>
+      <% } %>
+      </div>
+      </nav>
 
   <!-- gets profile page owner's username-->
   <script>
@@ -54,17 +63,33 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       document.write(profileName)
       </script>'s Profile Page</h1>
       <p><%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getBio()%></p>
+
+    <!-- class that holds everything only owning user can see-->
+    <div class="own_page">Edit your About Me (only you can see this)
+          <form action="/users" method = "POST">
+            <input type="text">
+            <button type ="submit">Update</button>
+          </form>
+          <br/>
+    </div>
+
   </div>
 
-<!-- class that holds everything only owning user can see-->
-  <div class="own_page"><center>
-    Edit your About Me (only you can see this)
-      <form action="/users" method = "POST">
-        <input type="text" name = "bio" id = "bio"></center>
-        <button type ="submit" style="display: block; margin: 0 auto;">Update</button>
-      </form>
-      <br/><br/>
-
+  <div id="container">
+    <h1 style = "font-size: 175%"><script>document.write(profileName)
+      </script>'s Sent Messages
+    </h1>
+    <p>
+      <% List<Message> messagesSent = UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent(); %>
+      <textarea
+        rows = "<%=messagesSent.size()%>"
+        cols = "1"
+        maxlength = "50">
+          <% for(int i = 0; i < messagesSent.size(); i++){ %>
+            <%=messagesSent.get(i).getTimeStamp()%> <%=messagesSent.get(i).getContent()%>
+        <% } %>
+      </textarea>
+    </p>
   </div>
 
   <script>

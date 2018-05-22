@@ -72,10 +72,12 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
     <nav>
         <style type="text/css">
-          a {text-decoration: none;}
-          a:hover {text-decoration: underline;}
+          a {transition-duration: 0.5s; text-decoration: none;}
+          a:hover {opacity: 0.5;}
         </style>
-        <a id="navTitle" href="/">CodeU Chat App</a>
+        <a id="navTitle" href="/">
+          <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
+        </a>
         <a href="/about.jsp">About</a>
         <div style="float: right; text-align: right;">
         <a href="/conversations">Conversations</a>

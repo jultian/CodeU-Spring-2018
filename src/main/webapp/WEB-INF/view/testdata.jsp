@@ -34,10 +34,12 @@
   
     <nav>
         <style type="text/css">
-          a {text-decoration: none;}
-          a:hover {text-decoration: underline;}
+          a {transition-duration: 0.5s; text-decoration: none;}
+          a:hover {opacity: 0.5;}
         </style>
-        <a id="navTitle" href="/">CodeU Chat App</a>
+        <a id="navTitle" href="/">
+          <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
+        </a>
         <a href="/about.jsp">About</a>
         <div style="float: right; text-align: right;">
         <a href="/conversations">Conversations</a>
@@ -62,18 +64,18 @@
   <div id="container">
     <h1 style="font-size: 175%">Administration</h1>
     <hr>
-    <p> Users: <%=UserStore.getInstance().numUsers() %> </p>
-    <p> Conversations: <%=ConversationStore.getInstance().numConversations()%> </p>
-    <p> Messages: <%=MessageStore.getInstance().numMessages() %> </p>
-    <p> Average number of messages per conversation: <%=ConversationStore.getInstance().avgMessagesPerConvo() %></p>
+    <p> <strong>Users:</strong> <%=UserStore.getInstance().numUsers() %> </p>
+    <p> <strong>Conversations:</strong> <%=ConversationStore.getInstance().numConversations()%> </p>
+    <p> <strong>Messages:</strong> <%=MessageStore.getInstance().numMessages() %> </p>
+    <p> <strong>Average number of messages per conversation:</strong> <%=ConversationStore.getInstance().avgMessagesPerConvo() %></p>
     <%if (UserStore.getInstance().newestUser() != null) { %>
-    	<p> Newest User: <%=UserStore.getInstance().newestUser().getName() %>, created at <%=UserStore.getInstance().newestUser().getReadableCreationTime() %></p>
+    	<p> <strong>Newest User:</strong> <%=UserStore.getInstance().newestUser().getName() %>, created at <%=UserStore.getInstance().newestUser().getReadableCreationTime() %></p>
     <% } %>
     <%if(UserStore.getInstance().mostActiveUser() != null) { %>
-    	<p> Most active user: <%=UserStore.getInstance().mostActiveUser().getName() %></p>
+    	<p> <strong>Most active user:</strong> <%=UserStore.getInstance().mostActiveUser().getName() %></p>
     <% } %>
     <%if (UserStore.getInstance().wordiestUser() != null) { %>
-    	<p> Wordiest user: <%=UserStore.getInstance().wordiestUser().getName() %></p>
+    	<p> <strong>Wordiest user:</strong> <%=UserStore.getInstance().wordiestUser().getName() %></p>
     <% } %>
     <hr>
 	<% if(request.getSession().getAttribute("user") != null){ %>

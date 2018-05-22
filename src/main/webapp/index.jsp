@@ -21,11 +21,11 @@
   <title>CodeU Chat App</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
+<body></body>
   <nav>
     <style type="text/css">
-      a {text-decoration: none;}
-      a:hover {text-decoration: underline;}
+      a {transition-duration: 0.5s; text-decoration: none;}
+      a:hover {opacity: 0.5;}
     </style>
     <a id="navTitle">
       <a href="/about.jsp">About</a>
@@ -49,11 +49,10 @@
   </nav>
 
   <div id="title">
-    <div
-      style="left: 50%;margin-left:auto; margin-right:auto; margin-top: 75px; text-align: center;">
-      <h1 style="color: #757575;font-size: 450%; line-height: 1">
-        <span style="color: #4285F4">C</span><span style="color: #EA4335">o</span><span style="color: #FBBC05">d</span><span style="color: #4285F4">e</span><span style="color: #34A853">U</span>
-        <br/><span style="font-size:90%">Chat</span>
+    <div id = "CodeU">
+      <h1>
+        <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
+        <span style="font-size:90%">Chat</span>
       </h1>
     </div>
 
@@ -65,42 +64,6 @@
       </p>
 
     <br/>
-
-	  <h2 style="line-height: .2">Meet Team Metapod (11):</h2>
-		<b>Kevin Wang</b>
-		<p>
-			Hey everyone! I'm Kevin, the project advisor for team Metapod(11).
-			:D I've been working at Google for a little over three years now and
-			work on Google Flights frontend.
-		</p>
-		<b>Julia Tiang</b>
-		<p>
-      Hey! I'm a rising junior at UNC-Chapel Hill and I'm double majoring in
-      Computer Science and Neuroscience. Besides coding, I also do a bit of graphic design
-      and I enjoy tinkering with typography, layouts, colors etc.
-		</p>
-		<b>Eda Zhou</b>
-		<p>
-			I'm Eda and a sophomore at Worcester Polytechnic Institute (WPI for short).
-			I am studying computer science although I am not sure what specifically I enjoy
-			the most yet and want to pursue. This makes me happy to try new things!
-		</p>
-		<b>Philip Cori</b>
-		<p>
-			 I'm a sophomore at Santa Clara University studying Computer Science and
-			 Engineering. As of now, I'm probably most interested in Data Science
-			 and back-end web development, though I'm super open to learning basically
-			 anything computer science related! I'm really looking forward to working
-			 with you all!
-		</p>
-		<b>Maximillian George 'Oche'</b>
-		<p>
-			Hey everyone, My first name is Maximillian but I go by Oche. I am a sophomore
-			at Washington and Jefferson and I'm majoring in computer and information
-			studies. I'm really interested in working on game programs maybe or something
-			to do with AI. I'm really not sure yet but I'm not really picky so I'm happy
-			to work on whatever.
-		</p>
     </div>
   </div>
 </body>

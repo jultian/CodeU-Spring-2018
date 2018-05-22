@@ -22,26 +22,26 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-  <nav style="background-color: #eeeeee">
+  <nav>
     <style type="text/css">
       a {text-decoration: none;}
       a:hover {text-decoration: underline;}
     </style>
     <a id="navTitle">
-      <a style="color: #444" href="/about.jsp">About</a>
+      <a href="/about.jsp">About</a>
       <div style="float: right;text-align: right;">
-        <a style="color: #444" href="/conversations">Conversations</a>
+        <a href="/conversations">Conversations</a>
         <% if(request.getSession().getAttribute("user") != null){ %>
-    			<a style="color: #444" href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+    			<a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
         <% } else{ %>
-    			<a style="color: #444" href="/login">Login</a>
-    			<a style="color: #444" href="/register">Register</a>
+    			<a href="/login">Login</a>
+    			<a href="/register">Register</a>
         <% } %>
     	<% if(request.getSession().getAttribute("user") != null){ %>
     		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-    		  <a style="color: #444" href="/testdata"> Administration</a>
+    		  <a href="/testdata"> Administration</a>
     		<% }else if(request.getSession().getAttribute("user") !=  null) { %>
-			  <a style="color: #444" href="/testdata"> App statistics</a>
+			  <a href="/testdata"> App statistics</a>
 			<%}%>
     	<% } %>
     </div>
@@ -51,7 +51,7 @@
   <div id="title">
     <div
       style="left: 50%;margin-left:auto; margin-right:auto; margin-top: 75px; text-align: center;">
-      <h1 style="color: #757575;font-size: 450%;line-height: 1">
+      <h1 style="color: #757575;font-size: 450%; line-height: 1">
         <span style="color: #4285F4">C</span><span style="color: #EA4335">o</span><span style="color: #FBBC05">d</span><span style="color: #4285F4">e</span><span style="color: #34A853">U</span>
         <br/><span style="font-size:90%">Chat</span>
       </h1>

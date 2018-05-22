@@ -70,26 +70,26 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
   </script>
 <body onload="scrollChat()">
 
-    <nav style="background-color: #eeeeee">
+    <nav>
         <style type="text/css">
           a {text-decoration: none;}
           a:hover {text-decoration: underline;}
         </style>
-        <a style="color: #444" id="navTitle" href="/">CodeU Chat App</a>
-        <a style="color: #444" href="/about.jsp">About</a>
+        <a id="navTitle" href="/">CodeU Chat App</a>
+        <a href="/about.jsp">About</a>
         <div style="float: right; text-align: right;">
-        <a style="color: #444" href="/conversations">Conversations</a>
+        <a href="/conversations">Conversations</a>
         <% if(request.getSession().getAttribute("user") != null){ %>
-          <a style="color: #444" href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+          <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
         <% } else { %>
-          <a style="color: #444" href="/login">Login</a>
-          <a style="color: #444" href="/register">Register</a>
+          <a href="/login">Login</a>
+          <a href="/register">Register</a>
         <% } %>
       <% if(request.getSession().getAttribute("user") != null){ %>
         <% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-          <a style="color: #444" href="/testdata">Administration</a>
+          <a href="/testdata">Administration</a>
         <% } else if(request.getSession().getAttribute("user") !=  null) { %>
-          <a style="color: #444" href="/testdata">App Statistics</a>
+          <a href="/testdata">App Statistics</a>
       <% } %>
       <% } %>
       </div>
@@ -104,15 +104,11 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
     <div id="chat">
       <ul>
-    <%
-      for (Message message : messages) {
+    <% for (Message message : messages) {
         String author = UserStore.getInstance()
-          .getUser(message.getAuthorId()).getName();
-    %>
+          .getUser(message.getAuthorId()).getName(); %>
       <li id = "<%= message.getId().toString()%>"><strong><%= author %>:</strong> <%= message.getContent() %> <% if(request.getSession().getAttribute("user").equals(UserStore.getInstance().getUser(message.getAuthorId()).getName())){ %><button value = "<%= message.getId().toString() %>" class = "delete" type = "button" style = "display : none;">Delete</button><% } %></li>
-    <%
-      }
-    %>
+    <% } %>
       </ul>
     </div>
 

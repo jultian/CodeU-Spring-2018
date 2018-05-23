@@ -65,15 +65,14 @@
           <div class="form-group">
             <label class="form-control-label">Title:</label>
           <input type="text" name="conversationTitle">
+          <button type="submit">Create</button>
         </div>
-
-        <button type="submit">Create</button>
       </form>
 
       <hr/>
     <% } %>
 
-    <h1 style="font-size: 200%">Conversations</h1>
+    <h1>Conversations</h1>
 
     <%
     List<Conversation> conversations =

@@ -22,12 +22,12 @@ body {
   font-size: 18px;
   line-height: 1.6;
   color: #444444;
-  background-color: rgb(255, 255, 255);
+  background-color: white;
 }
 
 nav {
   color: #444444;
-  background-color: rgb(255, 255, 255);
+  background-color: white;
 }
 
 nav a {
@@ -56,9 +56,12 @@ nav a {
   width: 800px;
 }
 
+p {
+  color: #444444;
+}
+
 h1 {
-  color: #757575;
-  font-size: 100%;
+  color: #4285F4;
 }
 
 input {
@@ -68,28 +71,32 @@ input {
   margin-right: auto;
 }
 
-button {
-  font-family: "Trebuchet MS", sans-serif;
-  font-size: 18px;
-  transition-duration: 0.5s;
-}
-
-button:hover {
-  color: white;
-  background-color: black;
-}
-
 .own_page {
   display: none;
 }
 
+button {
+  color: #4285F4;
+  background-color: white;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 18px;
+  transition-duration: 0.5s;
+  padding: 5px, 10px;
+}
+
+button:hover {
+  color: white;
+  background-color: #4285F4;
+}
+
 textarea {
+  color: #444444;
   padding: 5px;
-  font-family: sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   line-height: 1.0;
   font-size: 18px;
   text-align: left;
-  width: 750px;
+  width: 800px;
   margin-left: auto;
   margin-right: auto;
 }

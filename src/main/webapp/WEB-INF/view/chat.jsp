@@ -109,7 +109,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <% for (Message message : messages) {
         String author = UserStore.getInstance()
           .getUser(message.getAuthorId()).getName(); %>
-      <li id = "<%= message.getId().toString()%>"><strong><%= author %>:</strong> <%= message.getContent() %> <% if(request.getSession().getAttribute("user").equals(UserStore.getInstance().getUser(message.getAuthorId()).getName())){ %><button value = "<%= message.getId().toString() %>" class = "delete" type = "button" style = "display : none;">Delete</button><% } %></li>
+      <li id = "<%= message.getId().toString()%>"><strong><a href="/users/<%=author%>"><%= author %>:</a></strong> <%= message.getContent() %> <% if(request.getSession().getAttribute("user").equals(UserStore.getInstance().getUser(message.getAuthorId()).getName())){ %><button value = "<%= message.getId().toString() %>" class = "delete" type = "button" style = "display : none;">Delete</button><% } %></li>
     <% } %>
       </ul>
     </div>

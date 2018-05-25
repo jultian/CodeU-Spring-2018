@@ -54,7 +54,7 @@
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-	  <h2>Meet Team Metapod (#11) </h2>
+	  <h1>Meet Team Metapod (#11)</h1>
 	  <ul>
 		<li><b>Kevin Wang</b></li>
 		<p>
@@ -62,7 +62,7 @@
 			:D I've been working at Google for a little over three years now and
 			work on Google Flights frontend.
 		</p>
-		<li><b>Julia Tiang</b></li>
+		<li><b>Julia Tian</b></li>
 		<p>
 		  Hey! I'm a rising junior at UNC-Chapel Hill and I'm double majoring in
       Computer Science and Neuroscience. Besides coding, I also do a bit of graphic design

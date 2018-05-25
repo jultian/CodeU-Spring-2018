@@ -67,7 +67,7 @@
     <p> <strong>Users:</strong> <%=UserStore.getInstance().numUsers() %> </p>
     <p> <strong>Conversations:</strong> <%=ConversationStore.getInstance().numConversations()%> </p>
     <p> <strong>Messages:</strong> <%=MessageStore.getInstance().numMessages() %> </p>
-    <p> <strong>Average number of messages per conversation:</strong> <%=ConversationStore.getInstance().avgMessagesPerConvo() %></p>
+    <p> <strong>Average Number of Messages per Conversation:</strong> <%=ConversationStore.getInstance().avgMessagesPerConvo() %></p>
     <%if (UserStore.getInstance().newestUser() != null) { %>
     	<p> <strong>Newest User:</strong> <%=UserStore.getInstance().newestUser().getName() %>, created at <%=UserStore.getInstance().newestUser().getReadableCreationTime() %></p>
     <% } %>
@@ -75,7 +75,7 @@
     	<p> <strong>Most active user:</strong> <%=UserStore.getInstance().mostActiveUser().getName() %></p>
     <% } %>
     <%if (UserStore.getInstance().wordiestUser() != null) { %>
-    	<p> <strong>Wordiest user:</strong> <%=UserStore.getInstance().wordiestUser().getName() %></p>
+    	<p> <strong>Wordiest User:</strong> <%=UserStore.getInstance().wordiestUser().getName() %></p>
     <% } %>
     <hr>
 	<% if(request.getSession().getAttribute("user") != null){ %>

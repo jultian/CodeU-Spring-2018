@@ -59,20 +59,19 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
   </script>
 
   <div id="container">
-    <h1 style="font-size: 175%"><script>
+    <h1 style = "font-size: 175%"><script>
       document.write(profileName)
-      </script>'s Profile Page</h1>
-      <p><%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getBio()%></p>
+      </script>'s Bio</h1>
+
+      <p style = "color: #4285F4"><%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getBio()%></p>
 
     <!-- class that holds everything only owning user can see-->
-    <div class="own_page">Edit your About Me (only you can see this)
+    <div class="own_page"<strong>Edit your About Me (only you can see this): </strong>
           <form action="/users" method = "POST">
-            <input type="text">
+            <input type="text" name="bio" id="bio">
             <button type ="submit">Update</button>
           </form>
-          <br/>
     </div>
-
   </div>
 
   <div id="container">
@@ -83,11 +82,14 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <% List<Message> messagesSent = UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent(); %>
       <textarea
         rows = "<%=messagesSent.size()%>"
-        cols = "1"
-        maxlength = "50">
+        cols = "1">
           <% for(int i = 0; i < messagesSent.size(); i++){ %>
-            <%=messagesSent.get(i).getTimeStamp()%> <%=messagesSent.get(i).getContent()%>
-        <% } %>
+            <% if (messagesSent.get(i).getContent().length() <= 50) { %>
+              <%=messagesSent.get(i).getTimeStamp()%> <%=messagesSent.get(i).getContent()%>
+            <% } else { %>
+              <%=messagesSent.get(i).getTimeStamp()%> <%=messagesSent.get(i).getContent().substring(0, 50)%>...
+            <% } %>
+          <% } %>
       </textarea>
     </p>
   </div>

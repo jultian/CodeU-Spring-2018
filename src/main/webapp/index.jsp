@@ -24,7 +24,7 @@
 <body></body>
   <nav>
     <style type="text/css">
-      a {transition-duration: 0.5s; text-decoration: none;}
+      a {text-decoration: none;}
       a:hover {opacity: 0.5;}
     </style>
     <a id="navTitle">
@@ -52,19 +52,20 @@
     <div id = "CodeU">
       <h1>
         <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
-        <span style="font-size:90%">Chat</span>
+        <span style="color: #444444; font-size:90%">Chat</span>
       </h1>
     </div>
 
     <div id="container"
-      style="margin-left:auto; margin-right:auto; margin-top: 75px; width: 800px; text-align: left">
+      style="margin-top: 75px; text-align: left"><center>
       <h2 style="line-height: .2">Welcome!</h2>
       <p>
+      <% if(request.getSession().getAttribute("user") == null){ %>
         <a href="/login">Login</a> to get started.
+      <% } %>
       </p>
+    </div></center>
 
-    <br/>
-    </div>
   </div>
 </body>
 </html>

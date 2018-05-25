@@ -62,6 +62,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <h1 style = "font-size: 175%"><script>
       document.write(profileName)
       </script>'s Bio</h1>
+
       <p style = "color: #4285F4"><%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getBio()%></p>
 
     <!-- class that holds everything only owning user can see-->
@@ -81,14 +82,13 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <% List<Message> messagesSent = UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getMessagesSent(); %>
       <textarea
         rows = "<%=messagesSent.size()%>"
-        cols = "1"
-        maxlength = "50">
+        cols = "1">
           <% for(int i = 0; i < messagesSent.size(); i++){ %>
             <% if (messagesSent.get(i).getContent().length() <= 50) { %>
               <%=messagesSent.get(i).getTimeStamp()%> <%=messagesSent.get(i).getContent()%>
             <% } else { %>
-              <%=messagesSent.get(i).getTimeStamp()%> Message is too long to display...
-            <% } %> 
+              <%=messagesSent.get(i).getTimeStamp()%> <%=messagesSent.get(i).getContent().substring(0, 50)%>...
+            <% } %>
           <% } %>
       </textarea>
     </p>

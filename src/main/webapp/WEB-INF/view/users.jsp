@@ -61,9 +61,14 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
   <div id="container">
     <h1 style = "font-size: 175%"><script>
       document.write(profileName)
-      </script>'s Bio</h1>
-
+      </script>'s Profile Page</h1>
+      <% if (UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getBio() == null) { %>
+        <p>This user hasn't gotten their about me set up and is currently a ghost o.o</p>
+        <% } else { %>
       <p style = "color: #4285F4"><%=UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).getBio()%></p>
+    <% } %>
+  </div>
+
 
     <!-- class that holds everything only owning user can see-->
     <div class="own_page"<strong>Edit your About Me (only you can see this): </strong>

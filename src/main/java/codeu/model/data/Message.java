@@ -14,6 +14,7 @@
 
 package codeu.model.data;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -25,6 +26,8 @@ public class Message {
 	private final UUID author;
 	private final String content;
 	private final Instant creation;
+	private SimpleDateFormat format; 
+
 
 	/**
 	 * Constructs a new Message.
@@ -41,6 +44,7 @@ public class Message {
 		this.author = author;
 		this.content = content;
 		this.creation = creation;
+		this.format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	}
 
 	/** Returns the ID of this Message. */
@@ -67,4 +71,10 @@ public class Message {
 	public Instant getCreationTime() {
 		return creation;
 	}
+	
+	/**for messages sent time stamp*/
+	public String getTimeStamp() {
+		return format.format(creation.toEpochMilli());
+	}
+	
 }

@@ -26,23 +26,33 @@
 </head>
 <body>
 
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/about.jsp">About</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    <% } %>
-	<% if(request.getSession().getAttribute("user") != null){ %>
-		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata">Administration</a>
-		<% } %>
-	<% } %>
-  </nav>
-
+    <nav>
+        <style type="text/css">
+          a {transition-duration: 0.5s; text-decoration: none;}
+          a:hover {opacity: 0.5;}
+        </style>
+        <a id="navTitle" href="/">
+          <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
+        </a>
+        <a href="/about.jsp">About</a>
+        <div style="float: right; text-align: right;">
+        <a href="/conversations">Conversations</a>
+        <% if(request.getSession().getAttribute("user") != null){ %>
+          <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+        <% } else{ %>
+          <a href="/login">Login</a>
+          <a href="/register">Register</a>
+        <% } %>
+        <% if(request.getSession().getAttribute("user") != null){ %>
+        <% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+          <a href="/testdata">Administration</a>
+        <% } else if(request.getSession().getAttribute("user") !=  null) {%>
+          <a href="/testdata">App Statistics</a>
+        <%}%>
+      <% } %>
+      </div>
+      </nav>
+  
   <div id="container">
 
     <% if(request.getAttribute("error") != null){ %>
@@ -55,15 +65,14 @@
           <div class="form-group">
             <label class="form-control-label">Title:</label>
           <input type="text" name="conversationTitle">
+          <button type="submit">Create</button>
         </div>
-
-        <button type="submit">Create</button>
       </form>
 
       <hr/>
     <% } %>
 
-    <h1 style="font-size: 200%">Conversations</h1>
+    <h1>Conversations</h1>
 
     <%
     List<Conversation> conversations =
@@ -76,14 +85,10 @@
     else{
     %>
       <ul class="mdl-list">
-    <%
-      for(Conversation conversation : conversations){
-    %>
+    <% for(Conversation conversation : conversations){ %>
       <li><a href="/chat/<%= conversation.getId().toString() %>">
         <%= conversation.getTitle() %></a></li>
-    <%
-      }
-    %>
+    <% } %>
       </ul>
     <%
     }

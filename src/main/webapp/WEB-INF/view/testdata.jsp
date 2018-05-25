@@ -29,50 +29,65 @@
   <title>Load Test Data</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
+
 <body>
+  
+    <nav>
+        <style type="text/css">
+          a {transition-duration: 0.5s; text-decoration: none;}
+          a:hover {opacity: 0.5;}
+        </style>
+        <a id="navTitle" href="/">
+          <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
+        </a>
+        <a href="/about.jsp">About</a>
+        <div style="float: right; text-align: right;">
+        <a href="/conversations">Conversations</a>
+        <% if(request.getSession().getAttribute("user") != null){ %>
+          <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+        <% } else{ %>
+          <a href="/login">Login</a>
+          <a href="/register">Register</a>
+        <% } %>
+      <% if(request.getSession().getAttribute("user") != null){ %>
+      <% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+        <a href="/testdata">Administration</a>
+      <% } else if(request.getSession().getAttribute("user") !=  null) {%>
+        <a href="/testdata">App Statistics</a>
+      <%}%>
+      <% } %>
+      </div>
+      </nav>
 
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/about.jsp">About</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    <% } %>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-
-		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata">Administration</a>
-		<% } %>
-	<% } %>
-
-  </nav>
+  
 
   <div id="container">
     <h1 style="font-size: 175%">Administration</h1>
     <hr>
-    <p> Users: <%=UserStore.getInstance().numUsers() %> </p>
-    <p> Conversations: <%=ConversationStore.getInstance().numConversations()%> </p>
-    <p> Messages: <%=MessageStore.getInstance().numMessages() %> </p>
-    <p> Average number of messages per conversation: <%=ConversationStore.getInstance().avgMessagesPerConvo() %></p>
+    <p> <strong>Users:</strong> <%=UserStore.getInstance().numUsers() %> </p>
+    <p> <strong>Conversations:</strong> <%=ConversationStore.getInstance().numConversations()%> </p>
+    <p> <strong>Messages:</strong> <%=MessageStore.getInstance().numMessages() %> </p>
+    <p> <strong>Average Number of Messages per Conversation:</strong> <%=ConversationStore.getInstance().avgMessagesPerConvo() %></p>
     <%if (UserStore.getInstance().newestUser() != null) { %>
-    	<p> Newest User: <%=UserStore.getInstance().newestUser().getName() %>, created at <%=UserStore.getInstance().newestUser().getReadableCreationTime() %></p>
+    	<p> <strong>Newest User:</strong> <%=UserStore.getInstance().newestUser().getName() %>, created at <%=UserStore.getInstance().newestUser().getReadableCreationTime() %></p>
     <% } %>
     <%if(UserStore.getInstance().mostActiveUser() != null) { %>
-    	<p> Most active user: <%=UserStore.getInstance().mostActiveUser().getName() %></p>
+    	<p> <strong>Most active user:</strong> <%=UserStore.getInstance().mostActiveUser().getName() %></p>
     <% } %>
     <%if (UserStore.getInstance().wordiestUser() != null) { %>
-    	<p> Wordiest user: <%=UserStore.getInstance().wordiestUser().getName() %></p>
+    	<p> <strong>Wordiest User:</strong> <%=UserStore.getInstance().wordiestUser().getName() %></p>
     <% } %>
     <hr>
-    <p>This will load a number of users, conversations, and messages for testing
+	<% if(request.getSession().getAttribute("user") != null){ %>
+		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+		<p>This will load a number of users, conversations, and messages for testing
         purposes.</p>
-    <form action="/testdata" method="POST">
-      <button type="submit" value="confirm" name="confirm">Confirm</button>
-      <button type="submit" value="cancel" name="cancel">Do Nothing</button>
-    </form>
+		<form action="/testdata" method="POST">
+		  <button type="submit" value="confirm" name="confirm">Confirm</button>
+		  <button type="submit" value="cancel" name="cancel">Do Nothing</button>
+		</form>
+		<%}%>
+	<%}%>
   </div>
 </body>
 </html>

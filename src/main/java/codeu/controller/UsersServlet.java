@@ -77,6 +77,12 @@ public class UsersServlet extends HttpServlet {
       throws IOException, ServletException {
 
     String username = (String) request.getSession().getAttribute("user");
+    
+    // INSERT LOGOUT LOGIC HERE
+//    if (request.getParameter("Logout") == "Logout") {
+//    		response.sendRedirect("/users");
+//    }
+    
     String bio = (String)request.getParameter("bio");
     userStore.updateProfile(username, bio); // add bio to User in User Store
     

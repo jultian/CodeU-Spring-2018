@@ -70,22 +70,32 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
   </script>
 <body onload="scrollChat()">
 
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/about.jsp">About</a>
-    <a href="/conversations">Conversations</a>
-    <% if (request.getSession().getAttribute("user") != null) { %>
-      <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else { %>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    <% } %>
-	<% if(request.getSession().getAttribute("user") != null){ %>
-		<% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
-		  <a href="/testdata">Administration</a>
-		<% } %>
-	<% } %>
-  </nav>
+    <nav>
+        <style type="text/css">
+          a {transition-duration: 0.5s; text-decoration: none;}
+          a:hover {opacity: 0.5;}
+        </style>
+        <a id="navTitle" href="/">
+          <span id = "C_E">C</span><span id = "O">o</span><span id = "D">d</span><span id = "C_E">e</span><span id = "U">U</span>
+        </a>
+        <a href="/about.jsp">About</a>
+        <div style="float: right; text-align: right;">
+        <a href="/conversations">Conversations</a>
+        <% if(request.getSession().getAttribute("user") != null){ %>
+          <a href="/users/<%=request.getSession().getAttribute("user")%>">Hello <%= request.getSession().getAttribute("user") %>!</a>
+        <% } else { %>
+          <a href="/login">Login</a>
+          <a href="/register">Register</a>
+        <% } %>
+      <% if(request.getSession().getAttribute("user") != null){ %>
+        <% if(UserStore.getInstance().getUser((String)request.getSession().getAttribute("user")).isAdmin()){%>
+          <a href="/testdata">Administration</a>
+        <% } else if(request.getSession().getAttribute("user") !=  null) { %>
+          <a href="/testdata">App Statistics</a>
+      <% } %>
+      <% } %>
+      </div>
+      </nav>
 
   <div id="container">
 
@@ -96,15 +106,11 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
     <div id="chat">
       <ul>
-    <%
-      for (Message message : messages) {
+    <% for (Message message : messages) {
         String author = UserStore.getInstance()
-          .getUser(message.getAuthorId()).getName();
-    %>
-      <li id = "<%= message.getId().toString()%>"><strong><%= author %>:</strong> <%= message.getContent() %> <% if(request.getSession().getAttribute("user").equals(UserStore.getInstance().getUser(message.getAuthorId()).getName())){ %><button value = "<%= message.getId().toString() %>" class = "delete" type = "button" style = "display : none;">Delete</button><% } %></li>
-    <%
-      }
-    %>
+          .getUser(message.getAuthorId()).getName(); %>
+      <li id = "<%= message.getId().toString()%>"><strong><a href="/users/<%=author%>"><%= author %>:</a></strong> <%= message.getContent() %> <% if(request.getSession().getAttribute("user").equals(UserStore.getInstance().getUser(message.getAuthorId()).getName())){ %><button value = "<%= message.getId().toString() %>" class = "delete" type = "button" style = "display : none;">Delete</button><% } %></li>
+    <% } %>
       </ul>
     </div>
 
@@ -114,8 +120,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <form action="/chat/<%= conversation.getId().toString() %>" method="POST" id="myForm">
 		<input type="hidden" name="id" value="newMessage"/>
         <input type="text" name="message">
-        <br/>
         <button type="submit">Send</button>
+        <br/>
     </form>
     <% } else { %>
       <p><a href="/login">Login</a> to send a message.</p>
